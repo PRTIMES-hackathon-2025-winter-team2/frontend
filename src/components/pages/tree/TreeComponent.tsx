@@ -51,15 +51,16 @@ export const TreeComponent = () => {
           key={index}
           sx={{
             position: "absolute",
-            top: `calc(${pos.top}vh - ${sakuraVisible[index] ? 40 : 0}px)`,
-            left: `calc(${pos.left}vw - ${sakuraVisible[index] ? 40 : 0}px)`,
-            width: "180px", // 幅を統一
+            top: `${pos.top}vh`,
+            left: `${pos.left}vw`,
+            width: "180px", // 幅を統一して中心ズレを防ぐ
             height: "auto",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             cursor: "pointer",
             zIndex: 10,
+            transform: "translate(-50%, -50%)", // 中央位置を固定
           }}
           onClick={() => handleImageClick(index)}
         >
@@ -94,10 +95,10 @@ export const TreeComponent = () => {
                 fontSize: "14px",
                 textAlign: "center",
                 textShadow: `
-                2px 2px 3px rgba(255, 105, 180, 0.8),  /* 濃いピンクのシャドウ */
-                -2px -2px 3px rgba(255, 105, 180, 0.8), /* 逆方向のシャドウ */
-                0px 0px 6px rgba(255, 182, 193, 1)  /* 淡いピンクの光の効果 */
-                `,
+            2px 2px 3px rgba(255, 105, 180, 0.8),  
+            -2px -2px 3px rgba(255, 105, 180, 0.8),
+            0px 0px 6px rgba(255, 182, 193, 1)
+          `,
                 fontWeight: "bold",
               }}
             >
