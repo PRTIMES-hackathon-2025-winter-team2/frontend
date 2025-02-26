@@ -57,11 +57,12 @@ export const TreeComponent = () => {
             position: "absolute",
             top: `${pos.top}vh`,
             left: `${pos.left}vw`,
-            width: "100px",
+            width: sakuraVisible[index] ? "180px" : "100px",
             height: "auto",
             objectFit: "contain",
             zIndex: 10,
             cursor: "pointer",
+            transition: "width 0.3s ease-in-out",
           }}
         />
       ))}
