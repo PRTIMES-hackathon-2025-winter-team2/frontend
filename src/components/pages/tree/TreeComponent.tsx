@@ -37,7 +37,7 @@ export const TreeComponent = () => {
           backgroundColor: "brown",
           transformOrigin: "bottom center",
           clipPath: "polygon(50% 0%, 80% 100%, 20% 100%)",
-          width: "20px",
+          width: "60px",
         }}
       />
     </Container>
