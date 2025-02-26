@@ -2,12 +2,15 @@ import { Box, Container } from "@mui/material";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { dotPositions } from "./dotPositions";
-// import sakura_only from "../assets/sakura_only.png";
 import { sakuraPositions } from "./sakuraPositions";
-import  tubomi  from "../assets/tubomi.png";
+import tubomi from "../assets/tubomi.png";
+import sakura from "../assets/sakura_only.png";
 
 export const TreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
+  const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
+    new Array(sakuraPositions.length).fill(false)
+  );
 
   useEffect(() => {
     const updateOffset = () => {
@@ -17,6 +20,12 @@ export const TreeComponent = () => {
     window.addEventListener("resize", updateOffset);
     return () => window.removeEventListener("resize", updateOffset);
   }, []);
+
+  const handleImageClick = (index: number) => {
+    setSakuraVisible((prev) =>
+      prev.map((val, i) => (i === index ? !val : val))
+    );
+  };
 
   return (
     <Container sx={{ mt: 2, position: "relative" }}>
@@ -36,20 +45,23 @@ export const TreeComponent = () => {
           }}
         />
       ))}
+      {/* Clickable tubomi images that change to sakura */}
       {sakuraPositions.map((pos, index) => (
         <Box
           key={index}
           component="img"
-          src={tubomi}
-          alt="tubomi"
+          src={sakuraVisible[index] ? sakura : tubomi}
+          alt="sakura or tubomi"
+          onClick={() => handleImageClick(index)}
           sx={{
             position: "absolute",
             top: `${pos.top}vh`,
             left: `${pos.left}vw`,
-            width: "100px",
+            width: "180px",
             height: "auto",
             objectFit: "contain",
             zIndex: 10,
+            cursor: "pointer",
           }}
         />
       ))}
