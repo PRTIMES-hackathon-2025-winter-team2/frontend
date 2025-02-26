@@ -43,11 +43,11 @@ export const TreeComponent = () => {
       {/* Curved Branches growing from the trunk */}
       {[
         { topOffset: -450, leftOffset: 30, rotate: -25 },
-        { topOffset: -520, leftOffset: 30, rotate: 25 },
+        { topOffset: -400, leftOffset: 30, rotate: 25 },
         { topOffset: -350, leftOffset: 30, rotate: -25 },
-        { topOffset: -420, leftOffset: 30, rotate: 25 },
+        { topOffset: -300, leftOffset: 30, rotate: 25 },
         { topOffset: -250, leftOffset: 30, rotate: -25 },
-        { topOffset: -320, leftOffset: 30, rotate: 25 },
+        { topOffset: -200, leftOffset: 30, rotate: 25 },
       ].map((branch, index) => (
         <motion.div
           key={index}
