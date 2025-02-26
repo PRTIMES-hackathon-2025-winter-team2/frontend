@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MainComponent } from "./components/pages/MainComponents";
 import { NotFound } from "./components/pages/NotFound";
+import { TreeComponent } from "./components/pages/tree/TreeComponent";
 
 function App() {
   const ENDPOINT_BASE_PATH = "";
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="">
           <Route index element={<MainComponent />} />
+          <Route path="tree" element={<TreeComponent />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
