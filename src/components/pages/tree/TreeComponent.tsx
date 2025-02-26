@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { dotPositions } from "./dotPositions";
@@ -49,24 +49,51 @@ export const TreeComponent = () => {
       {sakuraPositions.map((pos, index) => (
         <Box
           key={index}
-          component="img"
-          src={sakuraVisible[index] ? sakura : tubomi}
-          alt="sakura or tubomi"
-          onClick={() => handleImageClick(index)}
           sx={{
             position: "absolute",
             top: `calc(${pos.top}vh - ${sakuraVisible[index] ? 40 : 0}px)`,
             left: `calc(${pos.left}vw - ${sakuraVisible[index] ? 40 : 0}px)`,
             width: sakuraVisible[index] ? "180px" : "100px",
             height: "auto",
-            objectFit: "contain",
-            zIndex: 10,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
             cursor: "pointer",
-            transition:
-              "width 0.3s ease-in-out, left 0.3s ease-in-out, top 0.3s ease-in-out",
+            zIndex: 10,
           }}
-        />
+          onClick={() => handleImageClick(index)}
+        >
+          {/* 画像 */}
+          <Box
+            component="img"
+            src={sakuraVisible[index] ? sakura : tubomi}
+            alt="sakura or tubomi"
+            sx={{
+              width: "100%",
+              height: "auto",
+              objectFit: "contain",
+              transition: "width 0.3s ease-in-out",
+            }}
+          />
+          {/* 画像上のテキスト */}
+          <Typography
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              color: "white",
+              padding: "4px 8px",
+              borderRadius: "4px",
+              fontSize: "14px",
+              textAlign: "center",
+            }}
+          >
+            メジャー球団からオファーされたい！
+          </Typography>
+        </Box>
       ))}
+
       <Box
         sx={{
           position: "absolute",
