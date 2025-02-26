@@ -58,12 +58,13 @@ export const TreeComponent = () => {
             position: "absolute",
             top: `${bottomOffset + branch.topOffset}px`,
             left: `calc(50% + ${branch.leftOffset}px)`,
-            width: "60px",
-            height: "10px",
-            backgroundColor: "brown",
-            transformOrigin: "left center",
-            transform: `rotate(${branch.rotate}deg)`,
-            borderRadius: "5px",
+            borderRadius: "50%",
+            borderBottom: "5px solid brown",
+            // borderRight: "5px solid brown",
+            width: "100px",
+            height: "60px",
+            // transformOrigin: "left center",
+            // transform: `rotate(${branch.rotate}deg)`,
           }}
         />
       ))}
