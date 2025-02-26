@@ -1,8 +1,13 @@
+// left:38が中心
 export const dotPositions = [
-  { top: 12, left: 55 },
-  { top: 13, left: 20 },
+  { top: 5, left: 41 },
+  { top: 6, left: 37 },
+  { top: 7, left: 47 },
+  { top: 8, left: 58 },
+  { top: 9, left: 25 },
+  { top: 13, left: 28 },
   { top: 15, left: 42 },
-  { top: 18, left: 60 },
+  { top: 18, left: 64 },
   { top: 19, left: 25 },
   { top: 20, left: 33 },
   { top: 22, left: 50 },
@@ -22,8 +27,8 @@ export const dotPositions = [
   { top: 46, left: 50 },
   { top: 48, left: 17 },
   { top: 50, left: 25 },
-  { top: 52, left: 62 },
+  { top: 52, left: 55 },
   { top: 55, left: 48 },
-  { top: 58, left: 14 },
+  { top: 58, left: 23 },
   { top: 60, left: 35 },
 ];

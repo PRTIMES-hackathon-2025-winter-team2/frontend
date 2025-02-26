@@ -57,7 +57,7 @@ export const TreeComponent = () => {
             position: "absolute",
             top: `${pos.top}vh`,
             left: `${pos.left}vw`,
-            width: "180px",
+            width: "100px",
             height: "auto",
             objectFit: "contain",
             zIndex: 10,
