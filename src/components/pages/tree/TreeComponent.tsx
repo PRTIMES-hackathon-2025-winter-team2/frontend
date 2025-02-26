@@ -3,18 +3,24 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const dotPositions = [
-    { top: 10, left: 20 },
-    { top: 30, left: 50 },
-    { top: 50, left: 80 },
-    { top: 70, left: 10 },
-    { top: 20, left: 60 },
-    { top: 20, left: 70 },
-    { top: 40, left: 30 },
-    { top: 60, left: 10 },
-    { top: 80, left: 40 },
-    { top: 15, left: 15 },
+  { top: 10, left: 40 },
+  { top: 15, left: 35 },
+  { top: 20, left: 50 },
+  { top: 25, left: 30 },
+  { top: 30, left: 40 },
+  { top: 35, left: 30 },
+  { top: 40, left: 50 },
+  { top: 45, left: 40 },
+  { top: 45, left: 20 },
+  { top: 45, left: 50 },
+  { top: 45, left: 40 },
+  { top: 45, left: 45 },
+  { top: 50, left: 48 },
+  { top: 53, left: 28 },
+  { top: 57, left: 35 },
+  { top: 60, left: 40 },
 ];
-  
+
 export const TreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
 
