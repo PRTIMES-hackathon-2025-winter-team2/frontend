@@ -15,7 +15,23 @@ export const TreeComponent = () => {
   }, []);
 
   return (
-    <Container sx={{ mt: 2, position: "relative", height: "100vh" }}>
+    <Container sx={{ mt: 2, position: "relative", backgroundColor: "#d4f4a1" }}>
+      {/* Green Dots Background */}
+      {[...Array(20)].map((_, index) => (
+        <Box
+          key={index}
+          sx={{
+            position: "absolute",
+            top: `${Math.random() * 100}vh`,
+            left: `${Math.random() * 100}vw`,
+            width: "80px",
+            height: "80px",
+            backgroundColor: "#90ee90",
+            borderRadius: "50%",
+            opacity: 0.7,
+          }}
+        />
+      ))}
       <Box
         sx={{
           position: "absolute",
