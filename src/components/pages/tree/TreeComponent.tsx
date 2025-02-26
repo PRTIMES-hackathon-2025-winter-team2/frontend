@@ -40,14 +40,14 @@ export const TreeComponent = () => {
           width: "60px",
         }}
       />
-      {/* Curved Branches growing from the trunk */}
+      {/* Curved Branches growing from the trunk with decreasing width */}
       {[
-        { topOffset: -450, leftOffset: 30, rotate: -25 },
-        { topOffset: -400, leftOffset: 30, rotate: 25 },
-        { topOffset: -350, leftOffset: 30, rotate: -25 },
-        { topOffset: -300, leftOffset: 30, rotate: 25 },
-        { topOffset: -250, leftOffset: 30, rotate: -25 },
-        { topOffset: -200, leftOffset: 30, rotate: 25 },
+        { topOffset: -450, leftOffset: 30, rotate: -25, width: 200 },
+        { topOffset: -400, leftOffset: 30, rotate: 25, width: 220 },
+        { topOffset: -350, leftOffset: 30, rotate: -25, width: 240 },
+        { topOffset: -300, leftOffset: 30, rotate: 25, width: 260 },
+        { topOffset: -250, leftOffset: 30, rotate: -25, width: 280 },
+        { topOffset: -200, leftOffset: 30, rotate: 25, width: 300 },
       ].map((branch, index) => (
         <motion.div
           key={index}
@@ -74,7 +74,7 @@ export const TreeComponent = () => {
             left: `calc(50% + ${branch.leftOffset}px)`,
             borderRadius: "50%",
             borderBottom: "5px solid brown",
-            width: "300px",
+            width: `${branch.width}px`,
             height: "60px",
             transformOrigin: "left center",
             display: "block",
