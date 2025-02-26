@@ -40,6 +40,32 @@ export const TreeComponent = () => {
           width: "60px",
         }}
       />
+      {/* Thin Branches */}
+      {[
+        { top: -450, left: -50, rotate: -30 },
+        { top: -420, left: 50, rotate: 30 },
+        { top: -380, left: -70, rotate: -45 },
+        { top: -350, left: 70, rotate: 45 },
+        { top: -300, left: -90, rotate: -60 },
+        { top: -280, left: 90, rotate: 60 },
+      ].map((branch, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, scaleY: 0 }}
+          animate={{ opacity: 1, scaleY: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          style={{
+            position: "absolute",
+            top: `${bottomOffset + branch.top}px`,
+            left: `calc(50% + ${branch.left}px)`,
+            width: "10px",
+            height: "80px",
+            backgroundColor: "brown",
+            transformOrigin: "bottom center",
+            transform: `rotate(${branch.rotate}deg)`,
+          }}
+        />
+      ))}
     </Container>
   );
 };
