@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { dotPositions } from "./dotPositions";
 import sakura_only from "../assets/sakura_only.png";
+import { sakuraPositions } from "./sakuraPositions";
 
 export const TreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
@@ -34,19 +35,22 @@ export const TreeComponent = () => {
           }}
         />
       ))}
-      <Box
-        component="img"
-        src={sakura_only}
-        alt="sakura_only"
-        sx={{
-          position: "absolute",
-          top: `${30}vh`,
-          left: `${50}vw`,
-          width: "50px",
-          height: "auto",
-          objectFit: "contain",
-        }}
-      />
+      {sakuraPositions.map((pos, index) => (
+        <Box
+          key={index}
+          component="img"
+          src={sakura_only}
+          alt="sakura_only"
+          sx={{
+            position: "absolute",
+            top: `${pos.top}vh`,
+            left: `${pos.left}vw`,
+            width: "90px",
+            height: "auto",
+            objectFit: "contain",
+          }}
+        />
+      ))}
       <Box
         sx={{
           position: "absolute",
