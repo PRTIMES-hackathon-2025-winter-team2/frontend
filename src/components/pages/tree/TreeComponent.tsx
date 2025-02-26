@@ -7,7 +7,7 @@ const dotPositions = [
     { top: 30, left: 50 },
     { top: 50, left: 80 },
     { top: 70, left: 10 },
-    { top: 90, left: 60 },
+    { top: 20, left: 60 },
     { top: 20, left: 70 },
     { top: 40, left: 30 },
     { top: 60, left: 10 },
