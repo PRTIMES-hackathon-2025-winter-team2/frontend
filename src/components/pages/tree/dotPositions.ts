@@ -1,0 +1,18 @@
+export const dotPositions = [
+  { top: 10, left: 40 },
+  { top: 15, left: 35 },
+  { top: 20, left: 50 },
+  { top: 25, left: 30 },
+  { top: 30, left: 40 },
+  { top: 35, left: 28 },
+  { top: 40, left: 50 },
+  { top: 45, left: 40 },
+  { top: 45, left: 25 },
+  { top: 45, left: 50 },
+  { top: 45, left: 40 },
+  { top: 45, left: 35 },
+  { top: 50, left: 48 },
+  { top: 53, left: 28 },
+  { top: 57, left: 35 },
+  { top: 60, left: 40 },
+];
