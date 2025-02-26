@@ -55,14 +55,15 @@ export const TreeComponent = () => {
           onClick={() => handleImageClick(index)}
           sx={{
             position: "absolute",
-            top: `${pos.top}vh`,
-            left: `${pos.left}vw`,
+            top: `calc(${pos.top}vh - ${sakuraVisible[index] ? 40 : 0}px)`,
+            left: `calc(${pos.left}vw - ${sakuraVisible[index] ? 40 : 0}px)`,
             width: sakuraVisible[index] ? "180px" : "100px",
             height: "auto",
             objectFit: "contain",
             zIndex: 10,
             cursor: "pointer",
-            transition: "width 0.3s ease-in-out",
+            transition:
+              "width 0.3s ease-in-out, left 0.3s ease-in-out, top 0.3s ease-in-out",
           }}
         />
       ))}
