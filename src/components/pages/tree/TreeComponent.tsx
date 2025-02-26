@@ -53,7 +53,7 @@ export const TreeComponent = () => {
             position: "absolute",
             top: `calc(${pos.top}vh - ${sakuraVisible[index] ? 40 : 0}px)`,
             left: `calc(${pos.left}vw - ${sakuraVisible[index] ? 40 : 0}px)`,
-            width: sakuraVisible[index] ? "180px" : "100px",
+            width: "180px", // 幅を統一
             height: "auto",
             display: "flex",
             flexDirection: "column",
@@ -69,28 +69,41 @@ export const TreeComponent = () => {
             src={sakuraVisible[index] ? sakura : tubomi}
             alt="sakura or tubomi"
             sx={{
-              width: "100%",
+              width: sakuraVisible[index] ? "180px" : "100px",
               height: "auto",
               objectFit: "contain",
               transition: "width 0.3s ease-in-out",
             }}
           />
-          {/* 画像上のテキスト */}
-          <Typography
+          {/* 画像上のテキスト (幅を一定にする) */}
+          <Box
             sx={{
               position: "absolute",
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              color: "white",
+              minWidth: "180px", // ここで幅を統一
+              textAlign: "center",
               padding: "4px 8px",
               borderRadius: "4px",
-              fontSize: "14px",
-              textAlign: "center",
             }}
           >
-            メジャー球団からオファーされたい！
-          </Typography>
+            <Typography
+              sx={{
+                color: "white",
+                fontSize: "14px",
+                textAlign: "center",
+                textShadow: `
+                2px 2px 3px rgba(255, 105, 180, 0.8),  /* 濃いピンクのシャドウ */
+                -2px -2px 3px rgba(255, 105, 180, 0.8), /* 逆方向のシャドウ */
+                0px 0px 6px rgba(255, 182, 193, 1)  /* 淡いピンクの光の効果 */
+                `,
+                fontWeight: "bold",
+              }}
+            >
+              メジャー球団からオファーされたい！
+            </Typography>
+          </Box>
         </Box>
       ))}
 
