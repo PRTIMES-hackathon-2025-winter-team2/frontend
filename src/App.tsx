@@ -3,7 +3,8 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MainComponent } from "./components/pages/MainComponents";
 import { NotFound } from "./components/pages/NotFound";
-import { Login } from "./components/pages/SignUp";
+import { SignUp } from "./components/pages/SignUp";
+import { Sign } from "crypto";
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
       <Routes>
         <Route path="">
           <Route index element={<MainComponent />} />
-          <Route path="login" element={<Login />} />
+          <Route path="login" element={<SignUp />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

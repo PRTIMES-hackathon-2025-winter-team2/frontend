@@ -1,7 +1,7 @@
 import { Container, Alert } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
-export const Login = () => {
+export const SignUp = () => {
     return (
         <>
           <Container sx={{ mt: 2 }}>
