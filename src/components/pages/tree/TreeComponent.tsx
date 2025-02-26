@@ -2,6 +2,19 @@ import { Box, Container } from "@mui/material";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+const dotPositions = [
+    { top: 10, left: 20 },
+    { top: 30, left: 50 },
+    { top: 50, left: 80 },
+    { top: 70, left: 10 },
+    { top: 90, left: 60 },
+    { top: 20, left: 70 },
+    { top: 40, left: 30 },
+    { top: 60, left: 10 },
+    { top: 80, left: 40 },
+    { top: 15, left: 15 },
+];
+  
 export const TreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
 
@@ -17,13 +30,13 @@ export const TreeComponent = () => {
   return (
     <Container sx={{ mt: 2, position: "relative", backgroundColor: "#d4f4a1" }}>
       {/* Green Dots Background */}
-      {[...Array(20)].map((_, index) => (
+      {dotPositions.map((pos, index) => (
         <Box
           key={index}
           sx={{
             position: "absolute",
-            top: `${Math.random() * 100}vh`,
-            left: `${Math.random() * 100}vw`,
+            top: `${pos.top}vh`,
+            left: `${pos.left}vw`,
             width: "80px",
             height: "80px",
             backgroundColor: "#90ee90",
