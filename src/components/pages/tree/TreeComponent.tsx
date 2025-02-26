@@ -40,29 +40,30 @@ export const TreeComponent = () => {
           width: "60px",
         }}
       />
-      {/* Thin Branches */}
+      {/* Curved Branches */}
       {[
-        { top: -450, left: -50, rotate: -30 },
-        { top: -420, left: 50, rotate: 30 },
-        { top: -380, left: -70, rotate: -45 },
-        { top: -350, left: 70, rotate: 45 },
-        { top: -300, left: -90, rotate: -60 },
-        { top: -280, left: 90, rotate: 60 },
+        { topOffset: -400, leftOffset: -30, rotate: -30 },
+        { topOffset: -370, leftOffset: 30, rotate: 30 },
+        { topOffset: -340, leftOffset: -50, rotate: -45 },
+        { topOffset: -310, leftOffset: 50, rotate: 45 },
+        { topOffset: -280, leftOffset: -70, rotate: -60 },
+        { topOffset: -250, leftOffset: 70, rotate: 60 },
       ].map((branch, index) => (
         <motion.div
           key={index}
-          initial={{ opacity: 0, scaleY: 0 }}
-          animate={{ opacity: 1, scaleY: 1 }}
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
           style={{
             position: "absolute",
-            top: `${bottomOffset + branch.top}px`,
-            left: `calc(50% + ${branch.left}px)`,
-            width: "10px",
-            height: "80px",
+            top: `${bottomOffset + branch.topOffset}px`,
+            left: `calc(50% + ${branch.leftOffset}px)`,
+            width: "60px",
+            height: "10px",
             backgroundColor: "brown",
-            transformOrigin: "bottom center",
+            transformOrigin: "left center",
             transform: `rotate(${branch.rotate}deg)`,
+            borderRadius: "5px",
           }}
         />
       ))}
