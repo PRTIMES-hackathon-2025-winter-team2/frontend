@@ -18,7 +18,7 @@ export const TreeComponent = () => {
   }, []);
 
   return (
-    <Container sx={{ mt: 2, position: "relative", backgroundColor: "#d4f4a1" }}>
+    <Container sx={{ mt: 2, position: "relative" }}>
       {/* Green Dots Background */}
       {dotPositions.map((pos, index) => (
         <Box
