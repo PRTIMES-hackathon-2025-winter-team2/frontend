@@ -2,8 +2,9 @@ import { Box, Container } from "@mui/material";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { dotPositions } from "./dotPositions";
-import sakura_only from "../assets/sakura_only.png";
+// import sakura_only from "../assets/sakura_only.png";
 import { sakuraPositions } from "./sakuraPositions";
+import  tubomi  from "../assets/tubomi.png";
 
 export const TreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
@@ -39,13 +40,13 @@ export const TreeComponent = () => {
         <Box
           key={index}
           component="img"
-          src={sakura_only}
-          alt="sakura_only"
+          src={tubomi}
+          alt="tubomi"
           sx={{
             position: "absolute",
             top: `${pos.top}vh`,
             left: `${pos.left}vw`,
-            width: "180px",
+            width: "100px",
             height: "auto",
             objectFit: "contain",
             zIndex: 10,
