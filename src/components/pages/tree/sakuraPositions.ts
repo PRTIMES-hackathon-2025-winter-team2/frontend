@@ -1,8 +1,8 @@
 export const sakuraPositions = [
-  { top: 8, left: 42 },
-  { top: 17, left: 30 },
-  { top: 25, left: 52 },
-  { top: 35, left: 21 },
-  { top: 45, left: 46 },
-  { top: 50, left: 32 },
+  { top: 23, left: 47 },
+  { top: 32, left: 35 },
+  { top: 40, left: 57 },
+  { top: 50, left: 26 },
+  { top: 60, left: 52 },
+  { top: 65, left: 37 },
 ];
