@@ -31,9 +31,9 @@ export const TreeComponent = () => {
         transition={{ duration: 1, ease: "easeOut" }}
         style={{
           position: "absolute",
-          top: `${bottomOffset - 200}px`,
+          top: `${bottomOffset - 500}px`,
           left: "50%",
-          height: "200px",
+          height: "500px",
           backgroundColor: "brown",
           transformOrigin: "bottom center",
           clipPath: "polygon(50% 0%, 80% 100%, 20% 100%)",
