@@ -42,11 +42,11 @@ export const TreeComponent = () => {
       />
       {/* Curved Branches */}
       {[
-        { topOffset: -450, leftOffset: -170, rotate: -30 },
+        { topOffset: -450, leftOffset: -270, rotate: -30 },
         { topOffset: -400, leftOffset: 30, rotate: 30 },
-        { topOffset: -350, leftOffset: -170, rotate: -45 },
+        { topOffset: -350, leftOffset: -270, rotate: -45 },
         { topOffset: -300, leftOffset: 40, rotate: 45 },
-        { topOffset: -250, leftOffset: -170, rotate: -60 },
+        { topOffset: -250, leftOffset: -270, rotate: -60 },
         { topOffset: -200, leftOffset: 40, rotate: 60 },
       ].map((branch, index) => (
         <motion.div
@@ -61,10 +61,11 @@ export const TreeComponent = () => {
             borderRadius: "50%",
             borderBottom: "5px solid brown",
             // borderRight: "5px solid brown",
-            width: "200px",
+            width: "300px",
             height: "60px",
             // transformOrigin: "left center",
-            // transform: `rotate(${branch.rotate}deg)`,
+            transform: `rotate(${branch.rotate}deg)`,
+            display: "block",
           }}
         />
       ))}
