@@ -33,10 +33,11 @@ export const TreeComponent = () => {
           position: "absolute",
           top: `${bottomOffset - 200}px`,
           left: "50%",
-          width: "10px",
           height: "200px",
           backgroundColor: "brown",
           transformOrigin: "bottom center",
+          clipPath: "polygon(50% 0%, 80% 100%, 20% 100%)",
+          width: "20px",
         }}
       />
     </Container>
