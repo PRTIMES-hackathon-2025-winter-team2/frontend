@@ -40,19 +40,19 @@ export const TreeComponent = () => {
           width: "60px",
         }}
       />
-      {/* Curved Branches */}
+      {/* Curved Branches growing from the trunk */}
       {[
-        { topOffset: -450, leftOffset: -270, rotate: -30 },
-        { topOffset: -400, leftOffset: 30, rotate: 30 },
-        { topOffset: -350, leftOffset: -270, rotate: -45 },
-        { topOffset: -300, leftOffset: 40, rotate: 45 },
-        { topOffset: -250, leftOffset: -270, rotate: -60 },
-        { topOffset: -200, leftOffset: 40, rotate: 60 },
+        { topOffset: -450, leftOffset: 30, rotate: -25 },
+        { topOffset: -520, leftOffset: -250, rotate: 25 },
+        { topOffset: -350, leftOffset: 30, rotate: -25 },
+        { topOffset: -420, leftOffset: -250, rotate: 25 },
+        { topOffset: -250, leftOffset: 30, rotate: -25 },
+        { topOffset: -320, leftOffset: -250, rotate: 25 },
       ].map((branch, index) => (
         <motion.div
           key={index}
-          initial={{ opacity: 0, scaleX: 0 }}
-          animate={{ opacity: 1, scaleX: 1 }}
+          initial={{ opacity: 0, scaleX: 0, transform: `rotate(${branch.rotate}deg) scaleX(0)` }}
+          animate={{ opacity: 1, scaleX: 1, transform: `rotate(${branch.rotate}deg) scaleX(1)` }}
           transition={{ duration: 1, ease: "easeOut" }}
           style={{
             position: "absolute",
@@ -60,11 +60,9 @@ export const TreeComponent = () => {
             left: `calc(50% + ${branch.leftOffset}px)`,
             borderRadius: "50%",
             borderBottom: "5px solid brown",
-            // borderRight: "5px solid brown",
             width: "300px",
             height: "60px",
-            // transformOrigin: "left center",
-            transform: `rotate(${branch.rotate}deg)`,
+            transformOrigin: "left center",
             display: "block",
           }}
         />
