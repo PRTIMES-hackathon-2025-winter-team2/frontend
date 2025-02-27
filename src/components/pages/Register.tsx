@@ -10,15 +10,19 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 
+const apiClient = axios.create({
+  baseURL: 'http://localhost:5000', // バックエンドのポート番号を指定
+  withCredentials: true, // Cookieを送受信するための設定
+});
+
 export const Register: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState(''); // メールアドレスの状態管理を追加
+  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!username || !password || !email) {
       setError('ユーザー名、パスワード、メールアドレスをすべて入力してください');
       return;
@@ -32,18 +36,14 @@ export const Register: React.FC = () => {
     }
 
     try {
-      // APIエンドポイントへのリクエスト
-      const response = await axios.post('/auth/register', {
+      const response = await apiClient.post('/auth/register', {
         "email":email,
         "password":password,
         "username":username,
-      }, {
-        withCredentials: true, // Cookieを送受信するための設定
       });
 
       // エラーをクリア
       setError('');
-
       // 登録成功時の処理（例: ログインページにリダイレクト）
       console.log('登録成功:', { email, username });
       window.location.href = '/login'; // ログインページに遷移
