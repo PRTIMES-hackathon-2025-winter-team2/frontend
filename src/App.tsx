@@ -19,7 +19,9 @@ function App() {
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<Register />} />
         <Route path="confirm-register" element={<ConfirmRegister />} />
-        <Route path="home" element={<MainComponent />} />
+        <Route path="home">
+          <Route path=":userId" element={<MainComponent />} />
+        </Route>
         <Route path="input">
           <Route path=":userId" element={<InputTree />} />
         </Route>

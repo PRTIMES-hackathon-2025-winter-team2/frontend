@@ -44,6 +44,7 @@ export const LoginPage: React.FC = () => {
         email,
         password,
       });
+      console.log(response)
 
       // エラーをクリア
       setError("");
@@ -52,7 +53,7 @@ export const LoginPage: React.FC = () => {
       // ログイン成功時の処理（例: ホームページにリダイレクト）
       console.log("ログイン成功:", { email });
       setTimeout(() => {
-        navigate(`/home/${response.data}`); // ホームページに遷移
+        navigate(`/home/${response.data.id}`); // ホームページに遷移
       }, 2000); // 2秒後に遷移
     } catch (err) {
       // エラーハンドリング

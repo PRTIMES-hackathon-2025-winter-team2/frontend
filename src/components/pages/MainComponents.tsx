@@ -14,7 +14,7 @@ export const MainComponent = () => {
           "&:hover": { backgroundColor: "hotpink" }, // ホバー時の背景色
         }}
         component={Link}
-        to={`/input/${userId}/treeId`}
+        to={`/input/${userId}`}
       >
         Dream Tree 作成画面へ
       </Button>
