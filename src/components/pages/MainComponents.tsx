@@ -1,13 +1,14 @@
 import { Typography, Container, Button, Stack } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
+import { useUserInfo } from "./hooks/useUserInfo";
 
 export const MainComponent = () => {
   const { userId } = useParams();
-  console.log(userId);
+  const userInfo = useUserInfo(userId || "");
   return (
     <Container sx={{ mt: 2 }}>
       <Stack direction="column" spacing={2}>
-        <Typography variant="h2">My Page</Typography>
+        <Typography variant="h2">{userInfo.name}さんのマイページ</Typography>
         <Button
           variant="contained"
           sx={{
