@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Typography, Button } from "@mui/material";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { dotPositions } from "./dotPositions";
@@ -6,25 +6,30 @@ import { sakuraPositions } from "./sakuraPositions";
 import tubomi from "../assets/tubomi.png";
 import sakura from "../assets/sakura_only.png";
 import { branchPositions } from "./branchPositions";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 // import { DreamData } from "../models/mockData";
 import { useDreamList } from "../hooks/useDreamList";
+import { useUpdateDreams } from "../hooks/useUpdate";
 
 export const TreeComponent = () => {
-  const data = useDreamList();
+  const { userId, treeId } = useParams();
+  // console.log("user" + userId);
+  // console.log("tree" + treeId);
+  const data = useDreamList(userId || "", treeId || "");
+  const { updateDreams } = useUpdateDreams();
+  console.log(data);
   const [bottomOffset, setBottomOffset] = useState(0);
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
-    data.map((dream) => dream.ended_at !== "")
+    data.dreams.map((dream) => !!dream.ended_at) // null でなければ true（sakura）
   );
 
   useEffect(() => {
-    if (data.length > 0) {
-      setSakuraVisible(data.map((dream) => dream.ended_at !== ""));
+    if (data.dreams.length > 0) {
+      setSakuraVisible(data.dreams.map((dream) => !!dream.ended_at)); // null → false（tubomi）、それ以外 → true（sakura）
     }
   }, [data]);
 
-  const { userId } = useParams();
-  console.log(userId);
+  // console.log(data.dreams[0]?.ended_at);
 
   useEffect(() => {
     const updateOffset = () => {
@@ -35,14 +40,18 @@ export const TreeComponent = () => {
     return () => window.removeEventListener("resize", updateOffset);
   }, []);
 
-  const handleImageClick = (index: number) => {
-    setSakuraVisible((prev) =>
-      prev.map((val, i) => (i === index ? !val : val))
-    );
+  const handleImageClick = (dreamId: string) => {
+    updateDreams(userId || "", treeId || "", dreamId);
+    window.location.reload();
   };
 
   return (
     <Container sx={{ mt: 2, position: "relative" }}>
+      <Box sx={{ paddingTop: 4, mb: 3 }}>
+        <Typography variant="h3" sx={{ color: "pink" }}>
+          {data.title}
+        </Typography>
+      </Box>
       {/* Green Dots Background */}
       {dotPositions.map((pos, index) => (
         <Box
@@ -60,13 +69,13 @@ export const TreeComponent = () => {
         />
       ))}
       {/* Clickable tubomi images that change to sakura */}
-      {sakuraPositions.map((pos, index) => (
+      {data.dreams.map((dream) => (
         <Box
-          key={index}
+          key={dream.id}
           sx={{
             position: "absolute",
-            top: `${pos.top}vh`,
-            left: `${pos.left}vw`,
+            top: `${sakuraPositions[dream.position]?.top}vh`,
+            left: `${sakuraPositions[dream.position]?.left}vw`,
             width: "180px",
             height: "auto",
             display: "flex",
@@ -76,17 +85,21 @@ export const TreeComponent = () => {
             zIndex: 10,
             transform: "translate(-50%, -50%)",
           }}
-          onClick={() => handleImageClick(index)}
+          onClick={() => handleImageClick(dream.id)}
         >
-          <Box
-            component="img"
-            src={sakuraVisible[index] ? sakura : tubomi}
+          <motion.img
+            src={dream.ended_at != null ? sakura : tubomi}
             alt="sakura or tubomi"
-            sx={{
-              width: sakuraVisible[index] ? "180px" : "100px",
+            initial={{ opacity: 0.5, scale: 0.9 }}
+            animate={{
+              opacity: 1,
+              scale: dream.ended_at != null ? 1.1 : 1, // sakura は少し大きく
+            }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            style={{
+              width: dream.ended_at != null ? "180px" : "100px",
               height: "auto",
               objectFit: "contain",
-              transition: "width 0.3s ease-in-out",
             }}
           />
           {/* 画像上のテキスト */}
@@ -108,19 +121,18 @@ export const TreeComponent = () => {
                 fontSize: "14px",
                 textAlign: "center",
                 textShadow: `
-            2px 2px 3px rgba(255, 105, 180, 0.8),  
-            -2px -2px 3px rgba(255, 105, 180, 0.8),
-            0px 0px 6px rgba(255, 182, 193, 1)
-          `,
+          2px 2px 3px rgba(255, 105, 180, 0.8),  
+          -2px -2px 3px rgba(255, 105, 180, 0.8),
+          0px 0px 6px rgba(255, 182, 193, 1)
+        `,
                 fontWeight: "bold",
               }}
             >
-              {data[index]?.title || "夢がまだありません"}
+              {dream.title || "夢がまだありません"}
             </Typography>
           </Box>
         </Box>
       ))}
-
       <Box
         sx={{
           position: "absolute",
@@ -178,6 +190,22 @@ export const TreeComponent = () => {
           }}
         />
       ))}
+      {/* Button at the bottom right corner */}
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: "pink", // ボタンの背景色
+          "&:hover": { backgroundColor: "hotpink" }, // ホバー時の背景色
+          position: "fixed",
+          bottom: "150px",
+          right: "350px",
+        }}
+        component={Link}
+        to={`/home/${userId}`}
+        // onClick={handleButtonClick}
+      >
+        マイページへ戻る
+      </Button>
     </Container>
   );
 };

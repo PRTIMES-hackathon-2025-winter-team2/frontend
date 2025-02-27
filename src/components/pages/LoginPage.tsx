@@ -53,7 +53,7 @@ export const LoginPage: React.FC = () => {
       // ログイン成功時の処理（例: ホームページにリダイレクト）
       console.log("ログイン成功:", { email });
       setTimeout(() => {
-        navigate(`/home/${response.data.id}`); // ホームページに遷移
+        navigate(`/home/${response.data.user_id}`); // ホームページに遷移
       }, 2000); // 2秒後に遷移
     } catch (err) {
       // エラーハンドリング

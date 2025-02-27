@@ -4,5 +4,5 @@ export type Dream = {
   position: number;
   title: string;
   created_at: string;
-  ended_at: string;
+  ended_at: string | null;
 };
