@@ -7,18 +7,32 @@ export function useMakeDreams() {
     title: string,
     newDreams: Dream[]
   ) {
-    const API_URL = `http://localhost:5000/users/${userId}/trees`;
+    const API_URL = `http://localhost:5000/users/${userId}/trees/`;
+
+    const filteredDreams = newDreams.map(({ title, position }) => ({
+      title,
+      position,
+    }));
+
     const body = {
       title: title,
-      dreams: newDreams,
+      dreams: filteredDreams,
     };
+    // const body = {
+    //   title: title,
+    //   dreams: newDreams,
+    // };
+    console.log(`body:${body}`);
     const response = await fetch(API_URL, {
+      credentials: "include",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
     });
+
+    console.log(`response:${response}`);
 
     if (!response.ok) {
       throw new Error("Failed to create new dreams");
