@@ -5,6 +5,7 @@ import { dotPositions } from "./dotPositions";
 import { sakuraPositions } from "./sakuraPositions";
 import tubomi from "../assets/tubomi.png";
 import { branchPositions } from "./branchPositions";
+import { Link } from "react-router-dom";
 
 export const InputTreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
@@ -174,6 +175,8 @@ export const InputTreeComponent = () => {
           bottom: "150px",
           right: "350px",
         }}
+        component={Link}
+        to="/tree"
         onClick={handleButtonClick}
       >
         Dream Tree 作成
