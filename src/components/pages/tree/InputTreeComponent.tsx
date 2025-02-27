@@ -58,12 +58,17 @@ export const InputTreeComponent = () => {
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTreeTitle(event.target.value); // Dream Tree のタイトルを更新
+    // console.log(treeTitle)
   };
 
   const handleButtonClick = async () => {
     console.log("Button clicked!");
     try {
-      const newTreeId = await createDreams(userId || "", "Dream Tree", dreams);
+      const newTreeId = await createDreams(
+        userId || "",
+        treeTitle || "Dream Tree",
+        dreams
+      );
       console.log(`Created Tree ID: ${newTreeId}`);
       setTreeId(newTreeId); // treeId を更新
     } catch (error) {
@@ -73,7 +78,7 @@ export const InputTreeComponent = () => {
 
   return (
     <Container sx={{ mt: 2, position: "relative" }}>
-      <Box sx={{ textAlign: "center",paddingTop:4, mb: 3 }}>
+      <Box sx={{ textAlign: "center", paddingTop: 4, mb: 3 }}>
         <TextField
           label="Dream Tree のタイトル"
           placeholder="例: 私の夢の木"
