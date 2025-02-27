@@ -1,6 +1,12 @@
 import { Container, Stack, Typography, Button } from "@mui/material";
+import { useTreeList } from "../hooks/useTreeList";
+import { useParams } from "react-router-dom";
 
 export const ListTreeComponent = () => {
+  const { userId } = useParams();
+  const treeList = useTreeList(userId || "");
+  console.log(treeList);
+
   return (
     <Container>
       <Stack direction="column" spacing={4} alignItems="center">
