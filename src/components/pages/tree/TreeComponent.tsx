@@ -6,12 +6,16 @@ import { sakuraPositions } from "./sakuraPositions";
 import tubomi from "../assets/tubomi.png";
 import sakura from "../assets/sakura_only.png";
 import { branchPositions } from "./branchPositions";
+import { useParams } from "react-router-dom";
 
 export const TreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
     new Array(sakuraPositions.length).fill(false)
   );
+
+  const { userId } = useParams();
+  console.log(userId)
 
   useEffect(() => {
     const updateOffset = () => {

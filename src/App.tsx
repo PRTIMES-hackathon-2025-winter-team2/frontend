@@ -15,7 +15,9 @@ function App() {
         <Route path="">
           <Route index element={<MainComponent />} />
           <Route path="input" element={<InputTree />} />
-          <Route path="tree" element={<Tree />} />
+          <Route path="tree">
+            <Route path={`:userId`} element={<Tree />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
