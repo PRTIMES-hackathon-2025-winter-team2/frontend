@@ -81,8 +81,8 @@ export const InputTreeComponent = () => {
           >
             <TextField
               id="standard-textarea"
-              label="Multiline Placeholder"
-              placeholder="Placeholder"
+              label="あなたの夢は？"
+              placeholder="パリに行きたい！"
               multiline
               variant="standard"
             />
