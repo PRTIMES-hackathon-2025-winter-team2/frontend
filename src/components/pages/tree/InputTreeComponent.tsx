@@ -1,21 +1,18 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, TextField, Button } from "@mui/material";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { dotPositions } from "./dotPositions";
 import { sakuraPositions } from "./sakuraPositions";
 import tubomi from "../assets/tubomi.png";
-import sakura from "../assets/sakura_only.png";
 import { branchPositions } from "./branchPositions";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-export const TreeComponent = () => {
+export const InputTreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
-  const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
-    new Array(sakuraPositions.length).fill(false)
-  );
+  const [dreams, setDreams] = useState<string[]>(() => new Array(6).fill(""));
 
   const { userId } = useParams();
-  console.log(userId)
+  console.log(userId);
 
   useEffect(() => {
     const updateOffset = () => {
@@ -26,10 +23,18 @@ export const TreeComponent = () => {
     return () => window.removeEventListener("resize", updateOffset);
   }, []);
 
-  const handleImageClick = (index: number) => {
-    setSakuraVisible((prev) =>
-      prev.map((val, i) => (i === index ? !val : val))
-    );
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    index: number
+  ) => {
+    const updatedDreams = [...dreams];
+    updatedDreams[index] = event.target.value; // 対象のインデックスのdreamを更新
+    setDreams(updatedDreams); // 配列を更新
+  };
+
+  const handleButtonClick = () => {
+    console.log("Button clicked!");
+    console.log(dreams); // dreams配列を表示
   };
 
   return (
@@ -67,15 +72,14 @@ export const TreeComponent = () => {
             zIndex: 10,
             transform: "translate(-50%, -50%)", // 中央位置を固定
           }}
-          onClick={() => handleImageClick(index)}
         >
           {/* 画像 */}
           <Box
             component="img"
-            src={sakuraVisible[index] ? sakura : tubomi}
+            src={tubomi}
             alt="sakura or tubomi"
             sx={{
-              width: sakuraVisible[index] ? "180px" : "100px",
+              width: "100px",
               height: "auto",
               objectFit: "contain",
               transition: "width 0.3s ease-in-out",
@@ -94,21 +98,14 @@ export const TreeComponent = () => {
               borderRadius: "4px",
             }}
           >
-            <Typography
-              sx={{
-                color: "white",
-                fontSize: "14px",
-                textAlign: "center",
-                textShadow: `
-            2px 2px 3px rgba(255, 105, 180, 0.8),  
-            -2px -2px 3px rgba(255, 105, 180, 0.8),
-            0px 0px 6px rgba(255, 182, 193, 1)
-          `,
-                fontWeight: "bold",
-              }}
-            >
-              メジャー球団からオファーされたい！
-            </Typography>
+            <TextField
+              id={`dream-${index}`}
+              label="あなたの夢は？"
+              placeholder="パリに行きたい！"
+              multiline
+              variant="standard"
+              onChange={(e) => handleInputChange(e, index)}
+            />
           </Box>
         </Box>
       ))}
@@ -171,6 +168,23 @@ export const TreeComponent = () => {
           }}
         />
       ))}
+
+      {/* Button at the bottom right corner */}
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: "pink", // ボタンの背景色
+          "&:hover": { backgroundColor: "hotpink" }, // ホバー時の背景色
+          position: "fixed",
+          bottom: "150px",
+          right: "350px",
+        }}
+        component={Link}
+        to="/trees/1"
+        onClick={handleButtonClick}
+      >
+        Dream Tree 作成
+      </Button>
     </Container>
   );
 };
