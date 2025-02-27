@@ -30,7 +30,7 @@ export const TreeComponent = () => {
     }
   }, [data]);
 
-  console.log(data.dreams[0]?.ended_at);
+  // console.log(data.dreams[0]?.ended_at);
 
   useEffect(() => {
     const updateOffset = () => {
@@ -41,11 +41,8 @@ export const TreeComponent = () => {
     return () => window.removeEventListener("resize", updateOffset);
   }, []);
 
-  const handleImageClick = (index: string) => {
-    // setSakuraVisible((prev) =>
-    //   prev.map((val, i) => (i === index ? !val : val))
-    // );
-    updateDreams(userId || "", treeId || "", index);
+  const handleImageClick = (dreamId: string) => {
+    updateDreams(userId || "", treeId || "", dreamId);
     window.location.reload();
   };
 
@@ -73,13 +70,13 @@ export const TreeComponent = () => {
         />
       ))}
       {/* Clickable tubomi images that change to sakura */}
-      {sakuraPositions.map((pos, index) => (
+      {data.dreams.map((dream) => (
         <Box
-          key={index}
+          key={dream.id}
           sx={{
             position: "absolute",
-            top: `${pos.top}vh`,
-            left: `${pos.left}vw`,
+            top: `${sakuraPositions[dream.position]?.top}vh`,
+            left: `${sakuraPositions[dream.position]?.left}vw`,
             width: "180px",
             height: "auto",
             display: "flex",
@@ -89,14 +86,14 @@ export const TreeComponent = () => {
             zIndex: 10,
             transform: "translate(-50%, -50%)",
           }}
-          onClick={() => handleImageClick(data.dreams[index].id)}
+          onClick={() => handleImageClick(dream.id)} // 修正
         >
           <Box
             component="img"
-            src={sakuraVisible[index] ? sakura : tubomi}
+            src={dream.ended_at != null ? sakura : tubomi}
             alt="sakura or tubomi"
             sx={{
-              width: sakuraVisible[index] ? "180px" : "100px",
+              width: dream.ended_at != null ? "180px" : "100px",
               height: "auto",
               objectFit: "contain",
               transition: "width 0.3s ease-in-out",
@@ -121,14 +118,14 @@ export const TreeComponent = () => {
                 fontSize: "14px",
                 textAlign: "center",
                 textShadow: `
-            2px 2px 3px rgba(255, 105, 180, 0.8),  
-            -2px -2px 3px rgba(255, 105, 180, 0.8),
-            0px 0px 6px rgba(255, 182, 193, 1)
-          `,
+        2px 2px 3px rgba(255, 105, 180, 0.8),  
+        -2px -2px 3px rgba(255, 105, 180, 0.8),
+        0px 0px 6px rgba(255, 182, 193, 1)
+      `,
                 fontWeight: "bold",
               }}
             >
-              {data.dreams[index]?.title || "夢がまだありません"}
+              {dream.title || "夢がまだありません"}
             </Typography>
           </Box>
         </Box>

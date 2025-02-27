@@ -4,7 +4,7 @@
 export function useUpdateDreams() {
   async function updateDreams(userId: string, treeId: string, dreamId: string) {
     const API_URL = `http://localhost:5000/users/${userId}/trees/${treeId}/dreams/${dreamId}`;
-
+    console.log(dreamId);
     const response = await fetch(API_URL, {
       credentials: "include",
       method: "PATCH",
