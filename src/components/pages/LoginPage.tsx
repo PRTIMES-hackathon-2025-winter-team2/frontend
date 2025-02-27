@@ -9,14 +9,16 @@ import {
   FormControl,
   FormHelperText,
 } from '@mui/material';
+import axios from 'axios';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState(''); // メールアドレスの状態管理
   const [password, setPassword] = useState(''); // パスワードの状態管理
   const [error, setError] = useState(''); // エラーメッセージの状態管理
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!email || !password) {
       setError('メールアドレスとパスワードを入力してください');
       return;
@@ -29,9 +31,29 @@ export const LoginPage: React.FC = () => {
       return;
     }
 
-    // ここにAPI呼び出しを実装
-    console.log('ログイン試行:', { email, password });
-    setError('');
+    try {
+      // APIエンドポイントへのリクエスト
+      const response = await axios.post('/auth/login', {
+        email,
+        password,
+      }, {
+        withCredentials: true, // Cookieを送受信するための設定
+      });
+
+      // エラーをクリア
+      setError('');
+
+      // ログイン成功時の処理（例: ホームページにリダイレクト）
+      console.log('ログイン成功:', { email });
+      window.location.href = '/home'; // ホームページに遷移
+    } catch (err) {
+      // エラーハンドリング
+      if (axios.isAxiosError(err)) {
+        setError('ログインに失敗しました。メールアドレスまたはパスワードが正しくありません。');
+      } else {
+        setError('予期しないエラーが発生しました。');
+      }
+    }
   };
 
   return (
@@ -56,9 +78,9 @@ export const LoginPage: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoFocus // 自動フォーカス
             />
           </FormControl>
-
           {/* パスワードの入力フィールド */}
           <FormControl fullWidth margin="normal" error={!!error}>
             <TextField
@@ -71,7 +93,6 @@ export const LoginPage: React.FC = () => {
             />
             {error && <FormHelperText>{error}</FormHelperText>}
           </FormControl>
-
           {/* ログインボタン */}
           <Button
             type="submit"
@@ -83,14 +104,12 @@ export const LoginPage: React.FC = () => {
             ログイン
           </Button>
         </form>
-
         {/* パスワード忘れリンク */}
         <Box mt={2}>
           <Link href="#" variant="body2">
-            パスワードを忘れた場合
+            パスワードを忘れた場合(未実装)
           </Link>
         </Box>
-
         {/* 新規登録リンク */}
         <Box mt={2}>
           <Typography variant="body2" align="center">

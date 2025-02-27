@@ -8,6 +8,7 @@ import {
   FormControl,
   FormHelperText,
 } from '@mui/material';
+import axios from 'axios';
 
 export const Register: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -15,8 +16,9 @@ export const Register: React.FC = () => {
   const [email, setEmail] = useState(''); // メールアドレスの状態管理を追加
   const [error, setError] = useState('');
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!username || !password || !email) {
       setError('ユーザー名、パスワード、メールアドレスをすべて入力してください');
       return;
@@ -29,9 +31,30 @@ export const Register: React.FC = () => {
       return;
     }
 
-    // ここにAPI呼び出しを実装
-    console.log('新規登録:', { username, password, email });
-    setError('');
+    try {
+      // APIエンドポイントへのリクエスト
+      const response = await axios.post('/auth/register', {
+        email,
+        password,
+        username,
+      }, {
+        withCredentials: true, // Cookieを送受信するための設定
+      });
+
+      // エラーをクリア
+      setError('');
+
+      // 登録成功時の処理（例: ログインページにリダイレクト）
+      console.log('登録成功:', { email, username });
+      window.location.href = '/login'; // ログインページに遷移
+    } catch (err) {
+      // エラーハンドリング
+      if (axios.isAxiosError(err)) {
+        setError('登録に失敗しました。既に使用されているメールアドレスかもしれません。');
+      } else {
+        setError('予期しないエラーが発生しました。');
+      }
+    }
   };
 
   return (
@@ -47,7 +70,7 @@ export const Register: React.FC = () => {
         <Typography variant="h4" component="h1" gutterBottom>
           アカウントの作成
         </Typography>
-        <form onSubmit={handleLogin} style={{ width: '100%' }}>
+        <form onSubmit={handleRegister} style={{ width: '100%' }}>
           {/* メールアドレスの入力フィールド */}
           <FormControl fullWidth margin="normal" error={!!error}>
             <TextField
@@ -56,9 +79,9 @@ export const Register: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoFocus // 自動フォーカス
             />
           </FormControl>
-
           {/* ユーザー名の入力フィールド */}
           <FormControl fullWidth margin="normal" error={!!error}>
             <TextField
@@ -69,7 +92,6 @@ export const Register: React.FC = () => {
               required
             />
           </FormControl>
-
           {/* パスワードの入力フィールド */}
           <FormControl fullWidth margin="normal" error={!!error}>
             <TextField
@@ -82,7 +104,6 @@ export const Register: React.FC = () => {
             />
             {error && <FormHelperText>{error}</FormHelperText>}
           </FormControl>
-
           {/* 新規登録ボタン */}
           <Button
             type="submit"
@@ -94,7 +115,6 @@ export const Register: React.FC = () => {
             新規登録
           </Button>
         </form>
-
       </Box>
     </Container>
   );
