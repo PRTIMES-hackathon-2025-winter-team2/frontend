@@ -180,7 +180,7 @@ export const InputTreeComponent = () => {
           right: "350px",
         }}
         component={Link}
-        to={`/trees/${userId}`}
+        to={`/trees/${userId}/treeId`}
         onClick={handleButtonClick}
       >
         Dream Tree 作成

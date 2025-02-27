@@ -7,20 +7,24 @@ import tubomi from "../assets/tubomi.png";
 import sakura from "../assets/sakura_only.png";
 import { branchPositions } from "./branchPositions";
 import { useParams } from "react-router-dom";
-import { DreamData } from "../models/mockData";
+// import { DreamData } from "../models/mockData";
 import { useDreamList } from "../hooks/useDreamList";
 
 export const TreeComponent = () => {
+  const data = useDreamList();
   const [bottomOffset, setBottomOffset] = useState(0);
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
-    DreamData.map((dream) => dream.ended_at !== "")
+    data.map((dream) => dream.ended_at !== "")
   );
+
+  useEffect(() => {
+    if (data.length > 0) {
+      setSakuraVisible(data.map((dream) => dream.ended_at !== ""));
+    }
+  }, [data]);
 
   const { userId } = useParams();
   console.log(userId);
-
-  const data = useDreamList();
-  console.log(data);
 
   useEffect(() => {
     const updateOffset = () => {
@@ -111,7 +115,7 @@ export const TreeComponent = () => {
                 fontWeight: "bold",
               }}
             >
-              {DreamData[index]?.title || "夢がまだありません"}
+              {data[index]?.title || "夢がまだありません"}
             </Typography>
           </Box>
         </Box>
