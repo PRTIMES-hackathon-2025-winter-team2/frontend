@@ -5,7 +5,7 @@ import { dotPositions } from "./dotPositions";
 import { sakuraPositions } from "./sakuraPositions";
 import tubomi from "../assets/tubomi.png";
 import { branchPositions } from "./branchPositions";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useMakeDreams } from "../hooks/useMakeDreams";
 import { Dream } from "../models/Dream";
 
@@ -26,6 +26,13 @@ export const InputTreeComponent = () => {
   const { userId } = useParams();
   const [treeId, setTreeId] = useState<string | null>(null);
   // console.log(userId);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (treeId) {
+      navigate(`/trees/${userId}/${treeId}`); // treeIdがセットされたら遷移
+    }
+  }, [treeId, userId, navigate]);
 
   useEffect(() => {
     const updateOffset = () => {
