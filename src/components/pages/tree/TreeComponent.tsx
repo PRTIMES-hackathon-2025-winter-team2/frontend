@@ -8,6 +8,7 @@ import sakura from "../assets/sakura_only.png";
 import { branchPositions } from "./branchPositions";
 import { useParams } from "react-router-dom";
 import { DreamData } from "../models/mockData";
+import { useDreamList } from "../hooks/useDreamList";
 
 export const TreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
@@ -17,6 +18,9 @@ export const TreeComponent = () => {
 
   const { userId } = useParams();
   console.log(userId);
+
+  const data = useDreamList();
+  console.log(data);
 
   useEffect(() => {
     const updateOffset = () => {
