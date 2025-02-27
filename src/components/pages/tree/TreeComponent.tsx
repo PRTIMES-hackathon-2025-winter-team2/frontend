@@ -46,6 +46,11 @@ export const TreeComponent = () => {
 
   return (
     <Container sx={{ mt: 2, position: "relative" }}>
+      <Box sx={{ paddingTop: 4, mb: 3 }}>
+        <Typography variant="h3" sx={{ color: "pink" }}>
+          {data.title}
+        </Typography>
+      </Box>
       {/* Green Dots Background */}
       {dotPositions.map((pos, index) => (
         <Box
