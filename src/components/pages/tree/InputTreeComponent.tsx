@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import { dotPositions } from "./dotPositions";
 import { sakuraPositions } from "./sakuraPositions";
 import tubomi from "../assets/tubomi.png";
-import sakura from "../assets/sakura_only.png";
+// import sakura from "../assets/sakura_only.png";
 import { branchPositions } from "./branchPositions";
 
 export const InputTreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
-  const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
-    new Array(sakuraPositions.length).fill(false)
-  );
+  //   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
+  //     new Array(sakuraPositions.length).fill(false)
+  //   );
 
   useEffect(() => {
     const updateOffset = () => {
@@ -22,11 +22,11 @@ export const InputTreeComponent = () => {
     return () => window.removeEventListener("resize", updateOffset);
   }, []);
 
-  const handleImageClick = (index: number) => {
-    setSakuraVisible((prev) =>
-      prev.map((val, i) => (i === index ? !val : val))
-    );
-  };
+  //   const handleImageClick = (index: number) => {
+  //     setSakuraVisible((prev) =>
+  //       prev.map((val, i) => (i === index ? !val : val))
+  //     );
+  //   };
 
   return (
     <Container sx={{ mt: 2, position: "relative" }}>
@@ -63,15 +63,15 @@ export const InputTreeComponent = () => {
             zIndex: 10,
             transform: "translate(-50%, -50%)", // 中央位置を固定
           }}
-          onClick={() => handleImageClick(index)}
+          //   onClick={() => handleImageClick(index)}
         >
           {/* 画像 */}
           <Box
             component="img"
-            src={sakuraVisible[index] ? sakura : tubomi}
+            src={tubomi}
             alt="sakura or tubomi"
             sx={{
-              width: sakuraVisible[index] ? "180px" : "100px",
+              width: "100px",
               height: "auto",
               objectFit: "contain",
               transition: "width 0.3s ease-in-out",
