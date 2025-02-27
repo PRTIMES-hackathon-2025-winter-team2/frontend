@@ -7,15 +7,20 @@ import tubomi from "../assets/tubomi.png";
 import sakura from "../assets/sakura_only.png";
 import { branchPositions } from "./branchPositions";
 import { useParams } from "react-router-dom";
+import { DreamData } from "../models/mockData";
+import { useDreamList } from "../hooks/useDreamList";
 
 export const TreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
-    new Array(sakuraPositions.length).fill(false)
+    DreamData.map((dream) => dream.ended_at !== "")
   );
 
   const { userId } = useParams();
-  console.log(userId)
+  console.log(userId);
+
+  const data = useDreamList();
+  console.log(data);
 
   useEffect(() => {
     const updateOffset = () => {
@@ -58,18 +63,17 @@ export const TreeComponent = () => {
             position: "absolute",
             top: `${pos.top}vh`,
             left: `${pos.left}vw`,
-            width: "180px", // 幅を統一して中心ズレを防ぐ
+            width: "180px",
             height: "auto",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             cursor: "pointer",
             zIndex: 10,
-            transform: "translate(-50%, -50%)", // 中央位置を固定
+            transform: "translate(-50%, -50%)",
           }}
           onClick={() => handleImageClick(index)}
         >
-          {/* 画像 */}
           <Box
             component="img"
             src={sakuraVisible[index] ? sakura : tubomi}
@@ -81,14 +85,14 @@ export const TreeComponent = () => {
               transition: "width 0.3s ease-in-out",
             }}
           />
-          {/* 画像上のテキスト (幅を一定にする) */}
+          {/* 画像上のテキスト */}
           <Box
             sx={{
               position: "absolute",
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              minWidth: "180px", // ここで幅を統一
+              minWidth: "180px",
               textAlign: "center",
               padding: "4px 8px",
               borderRadius: "4px",
@@ -107,7 +111,7 @@ export const TreeComponent = () => {
                 fontWeight: "bold",
               }}
             >
-              メジャー球団からオファーされたい！
+              {DreamData[index]?.title || "夢がまだありません"}
             </Typography>
           </Box>
         </Box>
@@ -137,7 +141,6 @@ export const TreeComponent = () => {
           width: "60px",
         }}
       />
-      {/* Curved Branches growing from the trunk with decreasing width */}
       {branchPositions.map((branch, index) => (
         <motion.div
           key={index}
