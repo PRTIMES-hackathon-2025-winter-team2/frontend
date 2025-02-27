@@ -169,8 +169,9 @@ export const InputTreeComponent = () => {
       {/* Button at the bottom right corner */}
       <Button
         variant="contained"
-        color="primary"
         sx={{
+          backgroundColor: "pink", // ボタンの背景色
+          "&:hover": { backgroundColor: "hotpink" }, // ホバー時の背景色
           position: "fixed",
           bottom: "150px",
           right: "350px",
