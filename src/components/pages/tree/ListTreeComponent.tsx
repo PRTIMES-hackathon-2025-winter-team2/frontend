@@ -1,6 +1,7 @@
-import { Container, Stack, Typography, Button } from "@mui/material";
+import { Container, Stack, Typography, Button, Box } from "@mui/material";
 import { useTreeList } from "../hooks/useTreeList";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import dream_tree from "../assets/dream_tree.png";
 
 export const ListTreeComponent = () => {
   const { userId } = useParams();
@@ -9,35 +10,37 @@ export const ListTreeComponent = () => {
 
   return (
     <Container>
-      <Stack direction="column" spacing={4} alignItems="center">
-        <Typography variant="h3">List</Typography>
-        <Button
-          variant="contained"
+      <Stack direction="column" spacing={4} alignItems="center" sx={{ paddingTop: 15 }}>
+        <Typography variant="h3" sx={{ mt: 3 }}>
+          作成した夢の木一覧
+        </Typography>
+        <Box
+          component="img"
+          src={dream_tree}
+          alt="dream_tree"
           sx={{
-            backgroundColor: "pink",
-            "&:hover": { backgroundColor: "hotpink" },
-            width: "250px", // ボタンの幅を固定
-            maxWidth: "100%", // レスポンシブ対応
+            width: "100px",
+            height: "auto",
+            objectFit: "contain",
+            transition: "width 0.3s ease-in-out",
           }}
-          // component={Link}
-          // to={`/input/${userId}`}
-        >
-          Dream Tree 作成画面へ
-        </Button>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "pink",
-            "&:hover": { backgroundColor: "hotpink" },
-            width: "250px", // ボタンの幅を固定
-            maxWidth: "100%", // レスポンシブ対応
-          }}
-          // component={Link}
-          // to={`/list/${userId}`}
-        >
-          Dream Tree 閲覧画面へ
-        </Button>
+        />
       </Stack>
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: "pink", // ボタンの背景色
+          "&:hover": { backgroundColor: "hotpink" }, // ホバー時の背景色
+          position: "fixed",
+          bottom: "150px",
+          right: "350px",
+        }}
+        component={Link}
+        to={`/home/${userId}`}
+        // onClick={handleButtonClick}
+      >
+        マイページへ戻る
+      </Button>
     </Container>
   );
 };
