@@ -15,19 +15,19 @@ export const TreeComponent = () => {
   // console.log("user" + userId);
   // console.log("tree" + treeId);
   const data = useDreamList(userId || "", treeId || "");
-  console.log(data);
+  // console.log(data);
   const [bottomOffset, setBottomOffset] = useState(0);
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
-    data.dreams.map((dream) => dream.ended_at !== "")
+    data.dreams.map((dream) => !!dream.ended_at) // null でなければ true（sakura）
   );
 
   useEffect(() => {
     if (data.dreams.length > 0) {
-      setSakuraVisible(data.dreams.map((dream) => dream.ended_at !== ""));
+      setSakuraVisible(data.dreams.map((dream) => !!dream.ended_at)); // null → false（tubomi）、それ以外 → true（sakura）
     }
   }, [data]);
 
-  // console.log(userId);
+  console.log(data.dreams[0]?.ended_at);
 
   useEffect(() => {
     const updateOffset = () => {
