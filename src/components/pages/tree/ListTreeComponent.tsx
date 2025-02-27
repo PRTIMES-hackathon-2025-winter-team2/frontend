@@ -27,59 +27,33 @@ export const ListTreeComponent = () => {
           作成した夢の木一覧
         </Typography>
       </Stack>
-      <Grid container spacing={2}>
-        <Grid size={{ xs: 6, md: 8 }}>
-          <Box
-            component="img"
-            src={dream_tree}
-            alt="dream_tree"
-            sx={{
-              width: "100px",
-              height: "auto",
-              objectFit: "contain",
-              transition: "width 0.3s ease-in-out",
-            }}
-          />
-        </Grid>
-        <Grid size={{ xs: 6, md: 4 }}>
-          <Box
-            component="img"
-            src={dream_tree}
-            alt="dream_tree"
-            sx={{
-              width: "100px",
-              height: "auto",
-              objectFit: "contain",
-              transition: "width 0.3s ease-in-out",
-            }}
-          />
-        </Grid>
-        <Grid size={{ xs: 6, md: 4 }}>
-          <Box
-            component="img"
-            src={dream_tree}
-            alt="dream_tree"
-            sx={{
-              width: "100px",
-              height: "auto",
-              objectFit: "contain",
-              transition: "width 0.3s ease-in-out",
-            }}
-          />
-        </Grid>
-        <Grid size={{ xs: 6, md: 8 }}>
-          <Box
-            component="img"
-            src={dream_tree}
-            alt="dream_tree"
-            sx={{
-              width: "100px",
-              height: "auto",
-              objectFit: "contain",
-              transition: "width 0.3s ease-in-out",
-            }}
-          />
-        </Grid>
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "repeat(2, 1fr)", md: "repeat(3, 1fr)" },
+          gap: 2,
+        }}
+      >
+        {treeList.trees.map((tree) => (
+          <Grid
+            key={tree.id}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
+            <Box
+              component="img"
+              src={dream_tree}
+              alt={tree.title}
+              sx={{
+                width: "100px",
+                height: "auto",
+                objectFit: "contain",
+                transition: "width 0.3s ease-in-out",
+              }}
+            />
+          </Grid>
+        ))}
       </Grid>
       <Button
         variant="contained"
@@ -92,7 +66,6 @@ export const ListTreeComponent = () => {
         }}
         component={Link}
         to={`/home/${userId}`}
-        // onClick={handleButtonClick}
       >
         マイページへ戻る
       </Button>
