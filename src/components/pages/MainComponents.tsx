@@ -32,7 +32,7 @@ export const MainComponent = () => {
             maxWidth: "100%", // レスポンシブ対応
           }}
           component={Link}
-          to={`/trees/${userId}/treeId`}
+          to={`/list/${userId}`}
         >
           Dream Tree 閲覧画面へ
         </Button>
