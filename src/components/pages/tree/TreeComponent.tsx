@@ -10,7 +10,6 @@ import { useParams, Link } from "react-router-dom";
 // import { DreamData } from "../models/mockData";
 import { useDreamList } from "../hooks/useDreamList";
 import { useUpdateDreams } from "../hooks/useUpdate";
-import { mutate } from "swr";
 
 export const TreeComponent = () => {
   const { userId, treeId } = useParams();
@@ -86,17 +85,21 @@ export const TreeComponent = () => {
             zIndex: 10,
             transform: "translate(-50%, -50%)",
           }}
-          onClick={() => handleImageClick(dream.id)} // 修正
+          onClick={() => handleImageClick(dream.id)}
         >
-          <Box
-            component="img"
+          <motion.img
             src={dream.ended_at != null ? sakura : tubomi}
             alt="sakura or tubomi"
-            sx={{
+            initial={{ opacity: 0.5, scale: 0.9 }}
+            animate={{
+              opacity: 1,
+              scale: dream.ended_at != null ? 1.1 : 1, // sakura は少し大きく
+            }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            style={{
               width: dream.ended_at != null ? "180px" : "100px",
               height: "auto",
               objectFit: "contain",
-              transition: "width 0.3s ease-in-out",
             }}
           />
           {/* 画像上のテキスト */}
@@ -118,10 +121,10 @@ export const TreeComponent = () => {
                 fontSize: "14px",
                 textAlign: "center",
                 textShadow: `
-        2px 2px 3px rgba(255, 105, 180, 0.8),  
-        -2px -2px 3px rgba(255, 105, 180, 0.8),
-        0px 0px 6px rgba(255, 182, 193, 1)
-      `,
+          2px 2px 3px rgba(255, 105, 180, 0.8),  
+          -2px -2px 3px rgba(255, 105, 180, 0.8),
+          0px 0px 6px rgba(255, 182, 193, 1)
+        `,
                 fontWeight: "bold",
               }}
             >
@@ -130,7 +133,6 @@ export const TreeComponent = () => {
           </Box>
         </Box>
       ))}
-
       <Box
         sx={{
           position: "absolute",
@@ -188,7 +190,6 @@ export const TreeComponent = () => {
           }}
         />
       ))}
-
       {/* Button at the bottom right corner */}
       <Button
         variant="contained"
