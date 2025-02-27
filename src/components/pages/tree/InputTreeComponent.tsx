@@ -6,10 +6,22 @@ import { sakuraPositions } from "./sakuraPositions";
 import tubomi from "../assets/tubomi.png";
 import { branchPositions } from "./branchPositions";
 import { Link, useParams } from "react-router-dom";
+import { useMakeDreams } from "../hooks/useMakeDreams";
+import { Dream } from "../models/Dream";
 
 export const InputTreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
-  const [dreams, setDreams] = useState<string[]>(() => new Array(6).fill(""));
+  const [dreams, setDreams] = useState<Dream[]>(() =>
+    new Array(6).fill(null).map((_, index) => ({
+      id: "", // 初期値
+      tree_id: "", // 初期値
+      position: index, // 配列のインデックスを使う
+      title: "", // ここに入力内容を格納
+      created_at: "", // 初期値
+      ended_at: "", // 初期値
+    }))
+  );
+  const { createDreams } = useMakeDreams();
 
   const { userId } = useParams();
   console.log(userId);
@@ -28,13 +40,17 @@ export const InputTreeComponent = () => {
     index: number
   ) => {
     const updatedDreams = [...dreams];
-    updatedDreams[index] = event.target.value; // 対象のインデックスのdreamを更新
-    setDreams(updatedDreams); // 配列を更新
+    updatedDreams[index] = {
+      ...updatedDreams[index], // 既存のプロパティを維持
+      title: event.target.value, // title を更新
+    };
+    setDreams(updatedDreams);
   };
 
   const handleButtonClick = () => {
     console.log("Button clicked!");
     console.log(dreams); // dreams配列を表示
+    createDreams(userId || "", "Dream Tree", dreams); // createDreams関数を呼び出し
   };
 
   return (
