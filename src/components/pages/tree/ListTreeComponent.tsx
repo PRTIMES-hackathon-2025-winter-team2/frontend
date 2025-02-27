@@ -42,18 +42,20 @@ export const ListTreeComponent = () => {
             sx={{ display: "flex", justifyContent: "center" }}
           >
             <Stack direction="column" spacing={1} alignItems="center">
-              <Box
-                component="img"
-                src={dream_tree}
-                alt={tree.title}
-                sx={{
-                  width: "100px",
-                  height: "auto",
-                  objectFit: "contain",
-                  transition: "width 0.3s ease-in-out",
-                }}
-              />
-              <Typography variant="h5">{tree.title}</Typography>
+              <Link to={`/trees/${userId}/${tree.id}`}>
+                <Box
+                  component="img"
+                  src={dream_tree}
+                  alt={tree.title}
+                  sx={{
+                    width: "100px",
+                    height: "auto",
+                    objectFit: "contain",
+                    transition: "width 0.3s ease-in-out",
+                  }}
+                />
+                <Typography variant="h5">{tree.title}</Typography>
+              </Link>
             </Stack>
           </Grid>
         ))}
