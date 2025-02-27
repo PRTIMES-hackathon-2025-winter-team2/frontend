@@ -13,7 +13,7 @@ import { useDreamList } from "../hooks/useDreamList";
 export const TreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
-    new Array(sakuraPositions.length).fill(false)
+    DreamData.map((dream) => dream.ended_at !== "")
   );
 
   const { userId } = useParams();

@@ -7,7 +7,7 @@ export const DreamData: Dream[] = [
     position: 0,
     title: "メジャーからオファーが欲しい！",
     created_at: "2025-02-27",
-    ended_at: "2025-02-27",
+    ended_at: "",
   },
   {
     id: "id1",
@@ -23,7 +23,7 @@ export const DreamData: Dream[] = [
     position: 2,
     title: "宇宙飛行士になりたい！",
     created_at: "2025-02-27",
-    ended_at: "2025-02-27",
+    ended_at: "",
   },
   {
     id: "id1",
