@@ -41,8 +41,15 @@ export const ListTreeComponent = () => {
             key={tree.id}
             sx={{ display: "flex", justifyContent: "center" }}
           >
-            <Stack direction="column" spacing={1} alignItems="center">
-              <Link to={`/trees/${userId}/${tree.id}`}>
+            <Link
+              to={`/trees/${userId}/${tree.id}`}
+              style={{
+                textDecoration: "underline",
+                textDecorationColor: "pink", // 下線の色をピンクに
+                textUnderlineOffset: "4px", // 下線を少し離す
+              }}
+            >
+              <Stack direction="column" spacing={1} alignItems="center">
                 <Box
                   component="img"
                   src={dream_tree}
@@ -54,9 +61,11 @@ export const ListTreeComponent = () => {
                     transition: "width 0.3s ease-in-out",
                   }}
                 />
-                <Typography variant="h5">{tree.title}</Typography>
-              </Link>
-            </Stack>
+                <Typography variant="h5" sx={{ color: "pink" }}>
+                  {tree.title}
+                </Typography>
+              </Stack>
+            </Link>
           </Grid>
         ))}
       </Grid>
