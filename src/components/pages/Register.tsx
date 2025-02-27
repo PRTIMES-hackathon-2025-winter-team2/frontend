@@ -34,9 +34,9 @@ export const Register: React.FC = () => {
     try {
       // APIエンドポイントへのリクエスト
       const response = await axios.post('/auth/register', {
-        email,
-        password,
-        username,
+        "email":email,
+        "password":password,
+        "username":username,
       }, {
         withCredentials: true, // Cookieを送受信するための設定
       });

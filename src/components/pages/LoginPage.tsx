@@ -34,8 +34,8 @@ export const LoginPage: React.FC = () => {
     try {
       // APIエンドポイントへのリクエスト
       const response = await axios.post('/auth/login', {
-        email,
-        password,
+        "email":email,
+        "password":password,
       }, {
         withCredentials: true, // Cookieを送受信するための設定
       });
