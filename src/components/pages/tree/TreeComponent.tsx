@@ -9,13 +9,16 @@ import { branchPositions } from "./branchPositions";
 import { useParams, Link } from "react-router-dom";
 // import { DreamData } from "../models/mockData";
 import { useDreamList } from "../hooks/useDreamList";
+import { useUpdateDreams } from "../hooks/useUpdate";
+import { mutate } from "swr";
 
 export const TreeComponent = () => {
   const { userId, treeId } = useParams();
   // console.log("user" + userId);
   // console.log("tree" + treeId);
   const data = useDreamList(userId || "", treeId || "");
-  // console.log(data);
+  const { updateDreams } = useUpdateDreams();
+  console.log(data);
   const [bottomOffset, setBottomOffset] = useState(0);
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
     data.dreams.map((dream) => !!dream.ended_at) // null でなければ true（sakura）
@@ -38,10 +41,12 @@ export const TreeComponent = () => {
     return () => window.removeEventListener("resize", updateOffset);
   }, []);
 
-  const handleImageClick = (index: number) => {
-    setSakuraVisible((prev) =>
-      prev.map((val, i) => (i === index ? !val : val))
-    );
+  const handleImageClick = (index: string) => {
+    // setSakuraVisible((prev) =>
+    //   prev.map((val, i) => (i === index ? !val : val))
+    // );
+    updateDreams(userId || "", treeId || "", index);
+    window.location.reload();
   };
 
   return (
@@ -84,7 +89,7 @@ export const TreeComponent = () => {
             zIndex: 10,
             transform: "translate(-50%, -50%)",
           }}
-          onClick={() => handleImageClick(index)}
+          onClick={() => handleImageClick(data.dreams[index].id)}
         >
           <Box
             component="img"
