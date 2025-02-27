@@ -8,6 +8,7 @@ import { branchPositions } from "./branchPositions";
 
 export const InputTreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
+  const [dream, setDream] = useState(""); // 入力内容を保持する状態
 
   useEffect(() => {
     const updateOffset = () => {
@@ -17,6 +18,12 @@ export const InputTreeComponent = () => {
     window.addEventListener("resize", updateOffset);
     return () => window.removeEventListener("resize", updateOffset);
   }, []);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDream(event.target.value); // 入力内容を状態に保存
+      console.log(event.target.value); // コンソールに表示
+      console.log(dream)
+  };
 
   return (
     <Container sx={{ mt: 2, position: "relative" }}>
@@ -85,6 +92,7 @@ export const InputTreeComponent = () => {
               placeholder="パリに行きたい！"
               multiline
               variant="standard"
+              onChange={handleInputChange}
             />
           </Box>
         </Box>
