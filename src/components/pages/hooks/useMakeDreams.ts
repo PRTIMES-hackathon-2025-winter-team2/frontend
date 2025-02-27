@@ -22,7 +22,7 @@ export function useMakeDreams() {
     //   title: title,
     //   dreams: newDreams,
     // };
-    console.log(`body:${body}`);
+    // console.log(`body:${body}`);
     const response = await fetch(API_URL, {
       credentials: "include",
       method: "POST",
@@ -32,7 +32,7 @@ export function useMakeDreams() {
       body: JSON.stringify(body),
     });
 
-    console.log(`response:${response}`);
+    console.log(`response:${response.body}`);
 
     if (!response.ok) {
       throw new Error("Failed to create new dreams");

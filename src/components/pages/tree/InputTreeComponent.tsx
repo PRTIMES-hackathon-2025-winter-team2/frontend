@@ -24,7 +24,7 @@ export const InputTreeComponent = () => {
   const { createDreams } = useMakeDreams();
 
   const { userId } = useParams();
-  console.log(userId);
+  // console.log(userId);
 
   useEffect(() => {
     const updateOffset = () => {
@@ -195,8 +195,8 @@ export const InputTreeComponent = () => {
           bottom: "150px",
           right: "350px",
         }}
-        component={Link}
-        to={`/trees/${userId}/treeId`}
+        // component={Link}
+        // to={`/trees/${userId}/treeId`}
         onClick={handleButtonClick}
       >
         Dream Tree 作成
