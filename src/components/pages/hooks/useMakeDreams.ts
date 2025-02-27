@@ -7,7 +7,7 @@ export function useMakeDreams() {
     title: string,
     newDreams: Dream[]
   ) {
-    const API_URL = `http://localhost:3000/users/${userId}/trees`;
+    const API_URL = `http://localhost:5000/users/${userId}/trees`;
     const body = {
       title: title,
       dreams: newDreams,
