@@ -11,6 +11,7 @@ import { Dream } from "../models/Dream";
 
 export const InputTreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
+  const [treeTitle, setTreeTitle] = useState(""); // Dream Tree のタイトル用
   const [dreams, setDreams] = useState<Dream[]>(() =>
     new Array(6).fill(null).map((_, index) => ({
       id: "", // 初期値
@@ -55,6 +56,10 @@ export const InputTreeComponent = () => {
     setDreams(updatedDreams);
   };
 
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTreeTitle(event.target.value); // Dream Tree のタイトルを更新
+  };
+
   const handleButtonClick = async () => {
     console.log("Button clicked!");
     try {
@@ -68,6 +73,16 @@ export const InputTreeComponent = () => {
 
   return (
     <Container sx={{ mt: 2, position: "relative" }}>
+      <Box sx={{ textAlign: "center",paddingTop:4, mb: 3 }}>
+        <TextField
+          label="Dream Tree のタイトル"
+          placeholder="例: 私の夢の木"
+          variant="outlined"
+          fullWidth
+          value={treeTitle}
+          onChange={handleTitleChange}
+        />
+      </Box>
       {/* Green Dots Background */}
       {dotPositions.map((pos, index) => (
         <Box
