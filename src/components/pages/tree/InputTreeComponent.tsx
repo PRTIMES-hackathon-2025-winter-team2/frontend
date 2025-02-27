@@ -5,11 +5,14 @@ import { dotPositions } from "./dotPositions";
 import { sakuraPositions } from "./sakuraPositions";
 import tubomi from "../assets/tubomi.png";
 import { branchPositions } from "./branchPositions";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export const InputTreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
   const [dreams, setDreams] = useState<string[]>(() => new Array(6).fill(""));
+
+  const { userId } = useParams();
+  console.log(userId);
 
   useEffect(() => {
     const updateOffset = () => {
@@ -177,7 +180,7 @@ export const InputTreeComponent = () => {
           right: "350px",
         }}
         component={Link}
-        to="/tree"
+        to="/trees/1"
         onClick={handleButtonClick}
       >
         Dream Tree 作成

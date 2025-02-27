@@ -14,8 +14,12 @@ function App() {
       <Routes>
         <Route path="">
           <Route index element={<MainComponent />} />
-          <Route path="input" element={<InputTree />} />
-          <Route path="tree" element={<Tree />} />
+          <Route path="input">
+            <Route path={`:userId`} element={<InputTree />} />
+          </Route>
+          <Route path="trees">
+            <Route path={`:userId`} element={<Tree />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
