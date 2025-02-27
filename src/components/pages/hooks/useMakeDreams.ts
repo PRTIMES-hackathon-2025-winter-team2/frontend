@@ -6,7 +6,7 @@ export function useMakeDreams() {
     userId: string,
     title: string,
     newDreams: Dream[]
-  ) {
+  ): Promise<string> {
     const API_URL = `http://localhost:5000/users/${userId}/trees/`;
 
     const filteredDreams = newDreams.map(({ title, position }) => ({
@@ -42,7 +42,7 @@ export function useMakeDreams() {
 
     // mutate(API_URL);
 
-    return result;
+    return result.id;
   }
 
   return { createDreams };

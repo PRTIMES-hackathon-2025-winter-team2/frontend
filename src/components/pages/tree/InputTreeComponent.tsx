@@ -24,6 +24,7 @@ export const InputTreeComponent = () => {
   const { createDreams } = useMakeDreams();
 
   const { userId } = useParams();
+  const [treeId, setTreeId] = useState<string | null>(null);
   // console.log(userId);
 
   useEffect(() => {
@@ -47,10 +48,15 @@ export const InputTreeComponent = () => {
     setDreams(updatedDreams);
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     console.log("Button clicked!");
-    console.log(dreams); // dreams配列を表示
-    createDreams(userId || "", "Dream Tree", dreams); // createDreams関数を呼び出し
+    try {
+      const newTreeId = await createDreams(userId || "", "Dream Tree", dreams);
+      console.log(`Created Tree ID: ${newTreeId}`);
+      setTreeId(newTreeId); // treeId を更新
+    } catch (error) {
+      console.error("Failed to create dream tree:", error);
+    }
   };
 
   return (
@@ -196,7 +202,7 @@ export const InputTreeComponent = () => {
           right: "350px",
         }}
         // component={Link}
-        // to={`/trees/${userId}/treeId`}
+        // to={`/trees/${userId}/${treeId}`}
         onClick={handleButtonClick}
       >
         Dream Tree 作成

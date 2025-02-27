@@ -12,19 +12,22 @@ import { useDreamList } from "../hooks/useDreamList";
 
 export const TreeComponent = () => {
   const { userId, treeId } = useParams();
+  // console.log("user" + userId);
+  // console.log("tree" + treeId);
   const data = useDreamList(userId || "", treeId || "");
+  console.log(data);
   const [bottomOffset, setBottomOffset] = useState(0);
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
-    data.map((dream) => dream.ended_at !== "")
+    data.dreams.map((dream) => dream.ended_at !== "")
   );
 
   useEffect(() => {
-    if (data.length > 0) {
-      setSakuraVisible(data.map((dream) => dream.ended_at !== ""));
+    if (data.dreams.length > 0) {
+      setSakuraVisible(data.dreams.map((dream) => dream.ended_at !== ""));
     }
   }, [data]);
 
-  console.log(userId);
+  // console.log(userId);
 
   useEffect(() => {
     const updateOffset = () => {
@@ -115,7 +118,7 @@ export const TreeComponent = () => {
                 fontWeight: "bold",
               }}
             >
-              {data[index]?.title || "夢がまだありません"}
+              {data.dreams[index]?.title || "夢がまだありません"}
             </Typography>
           </Box>
         </Box>
