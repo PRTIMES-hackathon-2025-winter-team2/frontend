@@ -8,9 +8,6 @@ import { branchPositions } from "./branchPositions";
 
 export const InputTreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
-  //   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
-  //     new Array(sakuraPositions.length).fill(false)
-  //   );
 
   useEffect(() => {
     const updateOffset = () => {
@@ -20,12 +17,6 @@ export const InputTreeComponent = () => {
     window.addEventListener("resize", updateOffset);
     return () => window.removeEventListener("resize", updateOffset);
   }, []);
-
-  //   const handleImageClick = (index: number) => {
-  //     setSakuraVisible((prev) =>
-  //       prev.map((val, i) => (i === index ? !val : val))
-  //     );
-  //   };
 
   return (
     <Container sx={{ mt: 2, position: "relative" }}>
@@ -62,7 +53,6 @@ export const InputTreeComponent = () => {
             zIndex: 10,
             transform: "translate(-50%, -50%)", // 中央位置を固定
           }}
-          //   onClick={() => handleImageClick(index)}
         >
           {/* 画像 */}
           <Box
