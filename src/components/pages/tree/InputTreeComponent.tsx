@@ -1,10 +1,9 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, TextField } from "@mui/material";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { dotPositions } from "./dotPositions";
 import { sakuraPositions } from "./sakuraPositions";
 import tubomi from "../assets/tubomi.png";
-// import sakura from "../assets/sakura_only.png";
 import { branchPositions } from "./branchPositions";
 
 export const InputTreeComponent = () => {
@@ -90,21 +89,13 @@ export const InputTreeComponent = () => {
               borderRadius: "4px",
             }}
           >
-            <Typography
-              sx={{
-                color: "white",
-                fontSize: "14px",
-                textAlign: "center",
-                textShadow: `
-            2px 2px 3px rgba(255, 105, 180, 0.8),  
-            -2px -2px 3px rgba(255, 105, 180, 0.8),
-            0px 0px 6px rgba(255, 182, 193, 1)
-          `,
-                fontWeight: "bold",
-              }}
-            >
-              メジャー球団からオファーされたい！
-            </Typography>
+            <TextField
+              id="standard-textarea"
+              label="Multiline Placeholder"
+              placeholder="Placeholder"
+              multiline
+              variant="standard"
+            />
           </Box>
         </Box>
       ))}
