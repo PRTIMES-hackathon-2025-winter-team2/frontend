@@ -1,4 +1,4 @@
-import { Box, Container, TextField, Button } from "@mui/material";
+import { Box, Container, TextField, Button, Alert } from "@mui/material";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { dotPositions } from "./dotPositions";
@@ -12,6 +12,7 @@ import { Dream } from "../models/Dream";
 export const InputTreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
   const [treeTitle, setTreeTitle] = useState(""); // Dream Tree のタイトル用
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // エラーメッセージ用
   const [dreams, setDreams] = useState<Dream[]>(() =>
     new Array(6).fill(null).map((_, index) => ({
       id: "", // 初期値
@@ -44,6 +45,16 @@ export const InputTreeComponent = () => {
     return () => window.removeEventListener("resize", updateOffset);
   }, []);
 
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage(null);
+      }, 2000); // 2秒後に消える
+
+      return () => clearTimeout(timer); // クリーンアップで `setTimeout` をクリア
+    }
+  }, [errorMessage]);
+
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     index: number
@@ -62,7 +73,11 @@ export const InputTreeComponent = () => {
   };
 
   const handleButtonClick = async () => {
-    console.log("Button clicked!");
+    setErrorMessage(null);
+    if (dreams.some((dream) => !dream.title.trim())) {
+      setErrorMessage("新しい夢の中に未記入のものがあります");
+      return;
+    }
     try {
       const newTreeId = await createDreams(
         userId || "",
@@ -234,6 +249,21 @@ export const InputTreeComponent = () => {
       >
         Dream Tree 作成
       </Button>
+
+      {/* エラーメッセージの表示 */}
+      {errorMessage && (
+        <Alert
+          severity="error"
+          sx={{
+            backgroundColor: "pink", // ボタンの背景色
+            position: "fixed",
+            bottom: "50px",
+            right: "250px",
+          }}
+        >
+          {errorMessage}
+        </Alert>
+      )}
     </Container>
   );
 };

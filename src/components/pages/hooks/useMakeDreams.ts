@@ -7,6 +7,10 @@ export function useMakeDreams() {
     title: string,
     newDreams: Dream[]
   ): Promise<string> {
+    if (newDreams.some((dream) => !dream.title.trim())) {
+      throw new Error("新しい夢の中に未記入の title があります");
+    }
+
     const API_URL = `http://localhost:5000/users/${userId}/trees/`;
 
     const filteredDreams = newDreams.map(({ title, position }) => ({
