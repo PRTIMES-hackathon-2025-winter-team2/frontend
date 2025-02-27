@@ -1,3 +1,4 @@
+// components/pages/Register.tsx
 import React, { useState } from 'react';
 import {
   Box,
@@ -8,53 +9,43 @@ import {
   FormControl,
   FormHelperText,
 } from '@mui/material';
-import axios from 'axios';
-
-const apiClient = axios.create({
-  baseURL: 'http://localhost:5000', // バックエンドのポート番号を指定
-  withCredentials: true, // Cookieを送受信するための設定
-});
+import { useNavigate } from 'react-router-dom';
 
 export const Register: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState(''); // パスワード再確認用
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+  const [showPasswords, setShowPasswords] = useState(false); // 共通のパスワード表示状態
+  const navigate = useNavigate();
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const handleNext = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !password || !email) {
-      setError('ユーザー名、パスワード、メールアドレスをすべて入力してください');
+    if (!username || !password || !confirmPassword || !email) {
+      setError('すべてのフィールドを入力してください');
       return;
     }
-
     // 簡単なメールアドレスの形式チェック
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError('正しいメールアドレスを入力してください');
       return;
     }
-
-    try {
-      const response = await apiClient.post('/auth/register', {
-        "email":email,
-        "password":password,
-        "username":username,
-      });
-
-      // エラーをクリア
-      setError('');
-      // 登録成功時の処理（例: ログインページにリダイレクト）
-      console.log('登録成功:', { email, username });
-      window.location.href = '/login'; // ログインページに遷移
-    } catch (err) {
-      // エラーハンドリング
-      if (axios.isAxiosError(err)) {
-        setError('登録に失敗しました。既に使用されているメールアドレスかもしれません。');
-      } else {
-        setError('予期しないエラーが発生しました。');
-      }
+    // パスワードと再確認パスワードが一致するかチェック
+    if (password !== confirmPassword) {
+      setError('パスワードが一致しません');
+      return;
     }
+    // エラーをクリア
+    setError('');
+    // 確認画面に遷移
+    navigate('/confirm-register', { state: { username, email, password } });
+  };
+
+  // パスワード表示/非表示のトグル関数
+  const toggleShowPasswords = () => {
+    setShowPasswords((prev) => !prev);
   };
 
   return (
@@ -70,7 +61,7 @@ export const Register: React.FC = () => {
         <Typography variant="h4" component="h1" gutterBottom>
           アカウントの作成
         </Typography>
-        <form onSubmit={handleRegister} style={{ width: '100%' }}>
+        <form onSubmit={handleNext} style={{ width: '100%' }}>
           {/* メールアドレスの入力フィールド */}
           <FormControl fullWidth margin="normal" error={!!error}>
             <TextField
@@ -96,15 +87,36 @@ export const Register: React.FC = () => {
           <FormControl fullWidth margin="normal" error={!!error}>
             <TextField
               label="パスワード"
-              type="password"
+              type={showPasswords ? 'text' : 'password'} // 動的にtypeを切り替え
               variant="outlined"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+          </FormControl>
+          {/* パスワード再確認の入力フィールド */}
+          <FormControl fullWidth margin="normal" error={!!error}>
+            <TextField
+              label="パスワード（再確認）"
+              type={showPasswords ? 'text' : 'password'} // 動的にtypeを切り替え
+              variant="outlined"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
             {error && <FormHelperText>{error}</FormHelperText>}
           </FormControl>
-          {/* 新規登録ボタン */}
+          {/* パスワード表示/非表示ボタン */}
+          <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            onClick={toggleShowPasswords}
+            sx={{ mt: 2 }}
+          >
+            {showPasswords ? 'パスワードを隠す' : 'パスワードを表示'}
+          </Button>
+          {/* 次へボタン */}
           <Button
             type="submit"
             variant="contained"
@@ -112,7 +124,7 @@ export const Register: React.FC = () => {
             fullWidth
             sx={{ mt: 2 }}
           >
-            新規登録
+            次へ
           </Button>
         </form>
       </Box>
