@@ -9,5 +9,5 @@ export function useDreamList() {
   const API_URL = "http://localhost:5000/users/cum/trees/veritatis/dreams";
   const { data } = useSWR<Dream[]>(API_URL, fetcher);
 
-  return data;
+  return data || [];
 }
