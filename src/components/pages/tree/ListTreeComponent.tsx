@@ -23,7 +23,7 @@ export const ListTreeComponent = () => {
         alignItems="center"
         sx={{ paddingTop: 15 }}
       >
-        <Typography variant="h3" sx={{ mt: 3 }}>
+        <Typography variant="h3" sx={{ mt: 3, paddingBottom: 3 }}>
           作成した夢の木一覧
         </Typography>
       </Stack>
@@ -41,17 +41,20 @@ export const ListTreeComponent = () => {
             key={tree.id}
             sx={{ display: "flex", justifyContent: "center" }}
           >
-            <Box
-              component="img"
-              src={dream_tree}
-              alt={tree.title}
-              sx={{
-                width: "100px",
-                height: "auto",
-                objectFit: "contain",
-                transition: "width 0.3s ease-in-out",
-              }}
-            />
+            <Stack direction="column" spacing={1} alignItems="center">
+              <Box
+                component="img"
+                src={dream_tree}
+                alt={tree.title}
+                sx={{
+                  width: "100px",
+                  height: "auto",
+                  objectFit: "contain",
+                  transition: "width 0.3s ease-in-out",
+                }}
+              />
+              <Typography variant="h5">{tree.title}</Typography>
+            </Stack>
           </Grid>
         ))}
       </Grid>
