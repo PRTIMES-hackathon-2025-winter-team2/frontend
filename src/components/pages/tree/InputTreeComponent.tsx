@@ -1,4 +1,4 @@
-import { Box, Container, TextField } from "@mui/material";
+import { Box, Container, TextField, Button } from "@mui/material";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { dotPositions } from "./dotPositions";
@@ -21,8 +21,11 @@ export const InputTreeComponent = () => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDream(event.target.value); // 入力内容を状態に保存
-      console.log(event.target.value); // コンソールに表示
-      console.log(dream)
+  };
+
+  const handleButtonClick = () => {
+    console.log("Button clicked!");
+    console.log(dream); // 現在のdreamの状態を表示
   };
 
   return (
@@ -156,6 +159,20 @@ export const InputTreeComponent = () => {
           }}
         />
       ))}
+
+      {/* Button at the bottom right corner */}
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{
+          position: "fixed", 
+          bottom: "150px",
+          right: "350px",
+        }}
+        onClick={handleButtonClick}
+      >
+        Dream Tree 作成
+      </Button>
     </Container>
   );
 };
