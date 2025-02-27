@@ -8,7 +8,7 @@ import { branchPositions } from "./branchPositions";
 
 export const InputTreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
-  const [dream, setDream] = useState(""); // 入力内容を保持する状態
+  const [dreams, setDreams] = useState<string[]>(() => new Array(6).fill(""));
 
   useEffect(() => {
     const updateOffset = () => {
@@ -19,13 +19,18 @@ export const InputTreeComponent = () => {
     return () => window.removeEventListener("resize", updateOffset);
   }, []);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDream(event.target.value); // 入力内容を状態に保存
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    index: number
+  ) => {
+    const updatedDreams = [...dreams];
+    updatedDreams[index] = event.target.value; // 対象のインデックスのdreamを更新
+    setDreams(updatedDreams); // 配列を更新
   };
 
   const handleButtonClick = () => {
     console.log("Button clicked!");
-    console.log(dream); // 現在のdreamの状態を表示
+    console.log(dreams); // dreams配列を表示
   };
 
   return (
@@ -90,12 +95,12 @@ export const InputTreeComponent = () => {
             }}
           >
             <TextField
-              id="standard-textarea"
+              id={`dream-${index}`}
               label="あなたの夢は？"
               placeholder="パリに行きたい！"
               multiline
               variant="standard"
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e, index)}
             />
           </Box>
         </Box>
@@ -165,7 +170,7 @@ export const InputTreeComponent = () => {
         variant="contained"
         color="primary"
         sx={{
-          position: "fixed", 
+          position: "fixed",
           bottom: "150px",
           right: "350px",
         }}
