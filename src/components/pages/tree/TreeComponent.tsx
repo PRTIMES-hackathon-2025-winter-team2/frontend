@@ -11,7 +11,8 @@ import { useParams } from "react-router-dom";
 import { useDreamList } from "../hooks/useDreamList";
 
 export const TreeComponent = () => {
-  const data = useDreamList();
+  const { userId } = useParams();
+  const data = useDreamList(userId || "");
   const [bottomOffset, setBottomOffset] = useState(0);
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
     data.map((dream) => dream.ended_at !== "")
@@ -23,7 +24,6 @@ export const TreeComponent = () => {
     }
   }, [data]);
 
-  const { userId } = useParams();
   console.log(userId);
 
   useEffect(() => {
