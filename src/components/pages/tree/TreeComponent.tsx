@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Typography, Button } from "@mui/material";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { dotPositions } from "./dotPositions";
@@ -6,7 +6,7 @@ import { sakuraPositions } from "./sakuraPositions";
 import tubomi from "../assets/tubomi.png";
 import sakura from "../assets/sakura_only.png";
 import { branchPositions } from "./branchPositions";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 // import { DreamData } from "../models/mockData";
 import { useDreamList } from "../hooks/useDreamList";
 
@@ -181,6 +181,23 @@ export const TreeComponent = () => {
           }}
         />
       ))}
+
+      {/* Button at the bottom right corner */}
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: "pink", // ボタンの背景色
+          "&:hover": { backgroundColor: "hotpink" }, // ホバー時の背景色
+          position: "fixed",
+          bottom: "150px",
+          right: "350px",
+        }}
+        component={Link}
+        to={`/home/${userId}`}
+        // onClick={handleButtonClick}
+      >
+        マイページへ戻る
+      </Button>
     </Container>
   );
 };
