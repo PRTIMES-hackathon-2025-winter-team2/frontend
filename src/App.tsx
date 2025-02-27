@@ -18,7 +18,9 @@ function App() {
             <Route path={`:userId`} element={<InputTree />} />
           </Route>
           <Route path="trees">
-            <Route path={`:userId`} element={<Tree />} />
+            <Route path={`:userId`}>
+              <Route path={`:treeId`} element={<Tree />} />
+            </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Route>
