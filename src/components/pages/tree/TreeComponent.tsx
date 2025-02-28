@@ -46,13 +46,14 @@ export const TreeComponent = () => {
 
   const handleImageClick = (dreamId: string) => {
     updateDreams(userId || "", treeId || "", dreamId);
-    window.location.reload();
+    // window.location.reload();
+    handleOpenModal();
   };
 
   // モーダルを開く
   const handleOpenModal = () => {
     if (userId) {
-      const url = `https://localhost:3000/trees/${userId}/${treeId}`; // 実際のURLに置き換えてください
+      const url = `http://localhost:3000/trees/${userId}/${treeId}`; // 実際のURLに置き換えてください
       setTweetTemplate(
         `🎉 【お知らせ】 🎉\nあなたの夢をSNSで共有しましょう！\n\n夢の木: ${url}`
       );
