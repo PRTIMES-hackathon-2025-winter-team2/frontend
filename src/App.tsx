@@ -11,6 +11,8 @@ import { MainComponent } from "./components/pages/MainComponents";
 import { TreeComponent } from "./components/pages/tree/TreeComponent";
 import { ListTree } from "./components/pages/tree/ListTree";
 
+export const API_PATH ="https://sakura-ogp.pacapaca.workers.dev/html"
+
 function App() {
   const ENDPOINT_BASE_PATH = "";
 
