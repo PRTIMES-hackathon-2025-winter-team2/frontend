@@ -100,7 +100,6 @@ export const TreeComponent = () => {
           }}
         />
       ))}
-
       {/* Clickable tubomi images that change to sakura */}
       {data.dreams.map((dream) => (
         <Box
