@@ -52,7 +52,7 @@ export const Tree = () => {
   return (
     <Box sx={{ background: "#d4f4a1", width: "100%", height: "100vh" }}>
       <TreeComponent /> {/* ドリームの木のグラフィック */}
-      <Box mt={4}>
+      {/* <Box mt={4}>
         <Button variant="contained" color="primary" onClick={handleOpen}>
           ツイートでシェアする
         </Button>
@@ -62,7 +62,7 @@ export const Tree = () => {
         onClose={handleClose}
         tweetTemplate={tweetTemplate}
         handleShare={handleShare}
-      />
+      /> */}
     </Box>
   );
 };
