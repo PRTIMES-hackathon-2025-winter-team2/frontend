@@ -52,7 +52,7 @@ export const TreeComponent = () => {
   // モーダルを開く
   const handleOpenModal = () => {
     if (userId) {
-      const url = `(実際に使える)https://example.com/trees/${userId}/treeID`; // 実際のURLに置き換えてください
+      const url = `https://localhost:3000/trees/${userId}/${treeId}`; // 実際のURLに置き換えてください
       setTweetTemplate(
         `🎉 【お知らせ】 🎉\nあなたの夢をSNSで共有しましょう！\n\n夢の木: ${url}`
       );
