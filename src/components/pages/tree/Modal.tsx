@@ -21,7 +21,7 @@ interface ModalProps {
 export const Modal: React.FC<ModalProps> = ({ open, onClose, tweetTemplate, handleShare }) => {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>🎉 【お知らせ】 🎉</DialogTitle>
+      <DialogTitle>🎉 【夢を達成しました！！】 🎉</DialogTitle>
       <DialogContent>
         <Typography variant="body1">あなたの夢をSNSで共有しましょう！</Typography>
         <Box mt={2}>
