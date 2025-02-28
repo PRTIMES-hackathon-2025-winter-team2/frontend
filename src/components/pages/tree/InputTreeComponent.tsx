@@ -5,7 +5,7 @@ import { dotPositions } from "./dotPositions";
 import { sakuraPositions } from "./sakuraPositions";
 import tubomi from "../assets/tubomi.png";
 import { branchPositions } from "./branchPositions";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { useMakeDreams } from "../hooks/useMakeDreams";
 import { Dream } from "../models/Dream";
 
@@ -248,6 +248,21 @@ export const InputTreeComponent = () => {
         onClick={handleButtonClick}
       >
         Dream Tree 作成
+      </Button>
+
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: "pink", // ボタンの背景色
+          "&:hover": { backgroundColor: "hotpink" }, // ホバー時の背景色
+          position: "fixed",
+          bottom: "150px",
+          right: "150px",
+        }}
+        component={Link}
+        to={`/home/${userId}`}
+      >
+        マイページへ戻る
       </Button>
 
       {/* エラーメッセージの表示 */}
