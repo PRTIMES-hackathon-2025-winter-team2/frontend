@@ -47,7 +47,7 @@ export const TreeComponent = () => {
   const handleImageClick = (dreamId: string) => {
     updateDreams(userId || "", treeId || "", dreamId);
     // window.location.reload();
-    // handleOpenModal();
+    handleOpenModal();
   };
 
   // モーダルを開く
@@ -63,6 +63,7 @@ export const TreeComponent = () => {
   // モーダルを閉じる
   const handleCloseModal = () => {
     setModalOpen(false);
+    window.location.reload();
   };
 
   // Twitterでのシェア処理
