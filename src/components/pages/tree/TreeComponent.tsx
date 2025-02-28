@@ -24,7 +24,8 @@ export const TreeComponent = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [tweetTemplate, setTweetTemplate] = useState("");
   const url2 = `http://localhost:3000/trees/${userId}/${treeId}`;
-  const url = `${API_PATH}/{夢の内容}/${userId}/${treeId}`;
+  // const url = `${API_PATH}/{夢の内容}/${userId}/${treeId}`;
+  const [url, setUrl] = useState("");
 
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
     data.dreams.map((dream) => !!dream.ended_at) // null でなければ true（sakura）
@@ -57,6 +58,9 @@ export const TreeComponent = () => {
   const handleOpenModal = (dreamTitle: string, treeTitle: string) => {
     const displayTitle = dreamTitle !== "" ? dreamTitle : treeTitle;
     if (userId) {
+      setUrl(
+        `${API_PATH}/${encodeURI(displayTitle)}/${userId}/${treeId}`
+      );
       setTweetTemplate(
         `🎉 【お知らせ】 🎉\n「${displayTitle}」 を達成しました！\n\n URL : ${url}`
       );
@@ -72,6 +76,7 @@ export const TreeComponent = () => {
 
   // Twitterでのシェア処理
   const handleShare = () => {
+    // const url = `${API_PATH}/{夢の内容}/${userId}/${treeId}`;
     const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
       url
     )}&text=${encodeURIComponent(
