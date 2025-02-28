@@ -47,12 +47,12 @@ export const TreeComponent = () => {
   const handleImageClick = (dreamId: string, dreamTitle: string) => {
     updateDreams(userId || "", treeId || "", dreamId);
     // window.location.reload();
-    handleOpenModal(dreamTitle);
+    handleOpenModal(dreamTitle, "");
   };
 
   // モーダルを開く
-  const handleOpenModal = (dreamTitle: string) => {
-    const displayTitle = dreamTitle !== "" ? dreamTitle : "夢の木";
+  const handleOpenModal = (dreamTitle: string, treeTitle: string) => {
+    const displayTitle = dreamTitle !== "" ? dreamTitle : treeTitle;
     if (userId) {
       setTweetTemplate(
         `🎉 【お知らせ】 🎉\n「${displayTitle}」 を達成しました！\n\n URL : ${url}`
@@ -237,7 +237,7 @@ export const TreeComponent = () => {
           right: "150px",
         }}
         color="primary"
-        onClick={() => handleOpenModal("")}
+        onClick={() => handleOpenModal("", data.title)}
       >
         ツイートでシェアする
       </Button>
