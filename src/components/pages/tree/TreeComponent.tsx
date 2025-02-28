@@ -55,7 +55,7 @@ export const TreeComponent = () => {
     const displayTitle = dreamTitle !== "" ? dreamTitle : "夢の木";
     if (userId) {
       setTweetTemplate(
-        `🎉 【お知らせ】 🎉\nあなたの夢をSNSで共有しましょう！\n\n${displayTitle}: ${url}`
+        `🎉 【お知らせ】 🎉\n「${displayTitle}」 を達成しました！\n\n URL : ${url}`
       );
     }
     setModalOpen(true);
