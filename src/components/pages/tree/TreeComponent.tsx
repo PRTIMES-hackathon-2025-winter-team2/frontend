@@ -1,35 +1,40 @@
-// components/pages/TreeComponent.tsx
-import React, { useState, useEffect } from 'react';
-import { Box, Container, Typography, Button } from '@mui/material';
-import { motion } from 'framer-motion';
-import { dotPositions } from './dotPositions';
-import { sakuraPositions } from './sakuraPositions';
+import { Box, Container, Typography, Button } from "@mui/material";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { dotPositions } from "./dotPositions";
+import { sakuraPositions } from "./sakuraPositions";
 import tubomi from "../assets/tubomi.png";
 import sakura from "../assets/sakura_only.png";
-import { branchPositions } from './branchPositions';
-import { useParams } from "react-router-dom";
+import { branchPositions } from "./branchPositions";
+import { useParams, Link } from "react-router-dom";
+// import { DreamData } from "../models/mockData";
 import { useDreamList } from "../hooks/useDreamList";
-import { Modal } from './Modal';
+import { useUpdateDreams } from "../hooks/useUpdate";
+import { Modal } from "./Modal";
 
 export const TreeComponent = () => {
-  // データと状態管理
-  const data = useDreamList();
+  const { userId, treeId } = useParams();
+  // console.log("user" + userId);
+  // console.log("tree" + treeId);
+  const data = useDreamList(userId || "", treeId || "");
+  const { updateDreams } = useUpdateDreams();
+  console.log(data);
   const [bottomOffset, setBottomOffset] = useState(0);
-  const [sakuraVisible, setSakuraVisible] = useState<boolean[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [tweetTemplate, setTweetTemplate] = useState('');
+  const [tweetTemplate, setTweetTemplate] = useState("");
 
-  // URLパラメータからユーザーIDを取得
-  const { userId } = useParams<{ userId: string }>();
+  const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
+    data.dreams.map((dream) => !!dream.ended_at) // null でなければ true（sakura）
+  );
 
-  // 初期化: sakuraVisibleの状態を設定
   useEffect(() => {
-    if (data.length > 0) {
-      setSakuraVisible(data.map((dream) => dream.ended_at !== ""));
+    if (data.dreams.length > 0) {
+      setSakuraVisible(data.dreams.map((dream) => !!dream.ended_at)); // null → false（tubomi）、それ以外 → true（sakura）
     }
   }, [data]);
 
-  // ウィンドウサイズ変更時のオフセット更新
+  // console.log(data.dreams[0]?.ended_at);
+
   useEffect(() => {
     const updateOffset = () => {
       setBottomOffset(window.innerHeight - 50);
@@ -39,18 +44,18 @@ export const TreeComponent = () => {
     return () => window.removeEventListener("resize", updateOffset);
   }, []);
 
-  // イベントハンドラ: 画像クリックで桜の表示状態を切り替え
-  const handleImageClick = (index: number) => {
-    setSakuraVisible((prev) =>
-      prev.map((val, i) => (i === index ? !val : val))
-    );
+  const handleImageClick = (dreamId: string) => {
+    updateDreams(userId || "", treeId || "", dreamId);
+    window.location.reload();
   };
 
   // モーダルを開く
   const handleOpenModal = () => {
     if (userId) {
       const url = `(実際に使える)https://example.com/trees/${userId}/treeID`; // 実際のURLに置き換えてください
-      setTweetTemplate(`🎉 【お知らせ】 🎉\nあなたの夢をSNSで共有しましょう！\n\n夢の木: ${url}`);
+      setTweetTemplate(
+        `🎉 【お知らせ】 🎉\nあなたの夢をSNSで共有しましょう！\n\n夢の木: ${url}`
+      );
     }
     setModalOpen(true);
   };
@@ -62,13 +67,22 @@ export const TreeComponent = () => {
 
   // Twitterでのシェア処理
   const handleShare = () => {
-    const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(tweetTemplate.split('\n')[2].split(': ')[1])}&text=${encodeURIComponent(tweetTemplate.split('\n').slice(0, 2).join(' '))}&hashtags=DreamTree`;
-    window.open(twitterUrl, '_blank');
+    const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+      tweetTemplate.split("\n")[2].split(": ")[1]
+    )}&text=${encodeURIComponent(
+      tweetTemplate.split("\n").slice(0, 2).join(" ")
+    )}&hashtags=DreamTree`;
+    window.open(twitterUrl, "_blank");
     handleCloseModal();
   };
 
   return (
     <Container sx={{ mt: 2, position: "relative" }}>
+      <Box sx={{ paddingTop: 4, mb: 3 }}>
+        <Typography variant="h3" sx={{ color: "pink" }}>
+          {data.title}
+        </Typography>
+      </Box>
       {/* Green Dots Background */}
       {dotPositions.map((pos, index) => (
         <Box
@@ -87,13 +101,13 @@ export const TreeComponent = () => {
       ))}
 
       {/* Clickable tubomi images that change to sakura */}
-      {sakuraPositions.map((pos, index) => (
+      {data.dreams.map((dream) => (
         <Box
-          key={index}
+          key={dream.id}
           sx={{
             position: "absolute",
-            top: `${pos.top}vh`,
-            left: `${pos.left}vw`,
+            top: `${sakuraPositions[dream.position]?.top}vh`,
+            left: `${sakuraPositions[dream.position]?.left}vw`,
             width: "180px",
             height: "auto",
             display: "flex",
@@ -103,17 +117,21 @@ export const TreeComponent = () => {
             zIndex: 10,
             transform: "translate(-50%, -50%)",
           }}
-          onClick={() => handleImageClick(index)}
+          onClick={() => handleImageClick(dream.id)}
         >
-          <Box
-            component="img"
-            src={sakuraVisible[index] ? sakura : tubomi}
+          <motion.img
+            src={dream.ended_at != null ? sakura : tubomi}
             alt="sakura or tubomi"
-            sx={{
-              width: sakuraVisible[index] ? "180px" : "100px",
+            initial={{ opacity: 0.5, scale: 0.9 }}
+            animate={{
+              opacity: 1,
+              scale: dream.ended_at != null ? 1.1 : 1, // sakura は少し大きく
+            }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            style={{
+              width: dream.ended_at != null ? "180px" : "100px",
               height: "auto",
               objectFit: "contain",
-              transition: "width 0.3s ease-in-out",
             }}
           />
           {/* 画像上のテキスト */}
@@ -135,20 +153,18 @@ export const TreeComponent = () => {
                 fontSize: "14px",
                 textAlign: "center",
                 textShadow: `
-                  2px 2px 3px rgba(255, 105, 180, 0.8),  
-                  -2px -2px 3px rgba(255, 105, 180, 0.8),
-                  0px 0px 6px rgba(255, 182, 193, 1)
-                `,
+          2px 2px 3px rgba(255, 105, 180, 0.8),  
+          -2px -2px 3px rgba(255, 105, 180, 0.8),
+          0px 0px 6px rgba(255, 182, 193, 1)
+        `,
                 fontWeight: "bold",
               }}
             >
-              {data[index]?.title || "夢がまだありません"}
+              {dream.title || "夢がまだありません"}
             </Typography>
           </Box>
         </Box>
       ))}
-
-      {/* 木の幹 */}
       <Box
         sx={{
           position: "absolute",
@@ -230,6 +246,22 @@ export const TreeComponent = () => {
         tweetTemplate={tweetTemplate}
         handleShare={handleShare}
       />
+      {/* Button at the bottom right corner */}
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: "pink", // ボタンの背景色
+          "&:hover": { backgroundColor: "hotpink" }, // ホバー時の背景色
+          position: "fixed",
+          bottom: "150px",
+          right: "350px",
+        }}
+        component={Link}
+        to={`/home/${userId}`}
+        // onClick={handleButtonClick}
+      >
+        マイページへ戻る
+      </Button>
     </Container>
   );
 };

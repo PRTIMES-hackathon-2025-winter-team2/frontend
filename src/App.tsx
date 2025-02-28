@@ -9,6 +9,7 @@ import { Register } from "./components/pages/Register";
 import { ConfirmRegister } from "./components/pages/ConfirmRegister";
 import { MainComponent } from "./components/pages/MainComponents";
 import { TreeComponent } from './components/pages/tree/TreeComponent';
+import { ListTree } from "./components/pages/tree/ListTree";
 
 function App() {
   const ENDPOINT_BASE_PATH = "";
@@ -30,6 +31,9 @@ function App() {
           <Route path=":userId">
             <Route path=":treeId" element={<Tree />} />
           </Route>
+        </Route>
+        <Route path="list">
+          <Route path=":userId" element={<ListTree />} />
         </Route>
         <Route path="*" element={<NotFound />} />
         <Route path="/trees/:treeId" element={<TreeComponent />} />
