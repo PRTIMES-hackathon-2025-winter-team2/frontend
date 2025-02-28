@@ -22,7 +22,7 @@ export const TreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [tweetTemplate, setTweetTemplate] = useState("");
-
+  const url = `http://localhost:3000/trees/${userId}/${treeId}`;
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
     data.dreams.map((dream) => !!dream.ended_at) // null でなければ true（sakura）
   );
@@ -47,13 +47,12 @@ export const TreeComponent = () => {
   const handleImageClick = (dreamId: string) => {
     updateDreams(userId || "", treeId || "", dreamId);
     // window.location.reload();
-    handleOpenModal();
+    // handleOpenModal();
   };
 
   // モーダルを開く
   const handleOpenModal = () => {
     if (userId) {
-      const url = `http://localhost:3000/trees/${userId}/${treeId}`; // 実際のURLに置き換えてください
       setTweetTemplate(
         `🎉 【お知らせ】 🎉\nあなたの夢をSNSで共有しましょう！\n\n夢の木: ${url}`
       );
@@ -69,7 +68,7 @@ export const TreeComponent = () => {
   // Twitterでのシェア処理
   const handleShare = () => {
     const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-      tweetTemplate.split("\n")[2].split(": ")[1]
+      url
     )}&text=${encodeURIComponent(
       tweetTemplate.split("\n").slice(0, 2).join(" ")
     )}&hashtags=DreamTree`;
