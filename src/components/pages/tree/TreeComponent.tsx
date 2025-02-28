@@ -226,18 +226,20 @@ export const TreeComponent = () => {
       ))}
 
       {/* ツイートボタン */}
-      <Box
+      <Button
+        variant="contained"
         sx={{
+          backgroundColor: "pink", // ボタンの背景色
+          "&:hover": { backgroundColor: "hotpink" }, // ホバー時の背景色
           position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          zIndex: 20,
+          bottom: "150px",
+          right: "150px",
         }}
+        color="primary"
+        onClick={handleOpenModal}
       >
-        <Button variant="contained" color="primary" onClick={handleOpenModal}>
-          ツイートでシェアする
-        </Button>
-      </Box>
+        ツイートでシェアする
+      </Button>
 
       {/* モーダルウィンドウ */}
       <Modal
