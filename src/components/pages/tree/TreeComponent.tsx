@@ -11,6 +11,7 @@ import { useParams, Link } from "react-router-dom";
 import { useDreamList } from "../hooks/useDreamList";
 import { useUpdateDreams } from "../hooks/useUpdate";
 import { Modal } from "./Modal";
+import { API_PATH } from "../../../App";
 
 export const TreeComponent = () => {
   const { userId, treeId } = useParams();
@@ -22,7 +23,9 @@ export const TreeComponent = () => {
   const [bottomOffset, setBottomOffset] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [tweetTemplate, setTweetTemplate] = useState("");
-  const url = `http://localhost:3000/trees/${userId}/${treeId}`;
+  const url2 = `http://localhost:3000/trees/${userId}/${treeId}`;
+  const url = `${API_PATH}/{夢の内容}/${userId}/${treeId}`;
+
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
     data.dreams.map((dream) => !!dream.ended_at) // null でなければ true（sakura）
   );
