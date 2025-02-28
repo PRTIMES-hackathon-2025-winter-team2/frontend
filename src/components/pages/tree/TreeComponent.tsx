@@ -10,6 +10,7 @@ import { useParams, Link } from "react-router-dom";
 // import { DreamData } from "../models/mockData";
 import { useDreamList } from "../hooks/useDreamList";
 import { useUpdateDreams } from "../hooks/useUpdate";
+import { Modal } from "./Modal";
 
 export const TreeComponent = () => {
   const { userId, treeId } = useParams();
@@ -19,6 +20,9 @@ export const TreeComponent = () => {
   const { updateDreams } = useUpdateDreams();
   console.log(data);
   const [bottomOffset, setBottomOffset] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [tweetTemplate, setTweetTemplate] = useState("");
+  const url = `http://localhost:3000/trees/${userId}/${treeId}`;
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
     data.dreams.map((dream) => !!dream.ended_at) // null でなければ true（sakura）
   );
@@ -42,7 +46,35 @@ export const TreeComponent = () => {
 
   const handleImageClick = (dreamId: string) => {
     updateDreams(userId || "", treeId || "", dreamId);
+    // window.location.reload();
+    handleOpenModal();
+  };
+
+  // モーダルを開く
+  const handleOpenModal = () => {
+    if (userId) {
+      setTweetTemplate(
+        `🎉 【お知らせ】 🎉\nあなたの夢をSNSで共有しましょう！\n\n夢の木: ${url}`
+      );
+    }
+    setModalOpen(true);
+  };
+
+  // モーダルを閉じる
+  const handleCloseModal = () => {
+    setModalOpen(false);
     window.location.reload();
+  };
+
+  // Twitterでのシェア処理
+  const handleShare = () => {
+    const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+      url
+    )}&text=${encodeURIComponent(
+      tweetTemplate.split("\n").slice(0, 2).join(" ")
+    )}&hashtags=DreamTree`;
+    window.open(twitterUrl, "_blank");
+    handleCloseModal();
   };
 
   return (
@@ -157,6 +189,8 @@ export const TreeComponent = () => {
           width: "60px",
         }}
       />
+
+      {/* 枝 */}
       {branchPositions.map((branch, index) => (
         <motion.div
           key={index}
@@ -190,6 +224,30 @@ export const TreeComponent = () => {
           }}
         />
       ))}
+
+      {/* ツイートボタン */}
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: "pink", // ボタンの背景色
+          "&:hover": { backgroundColor: "hotpink" }, // ホバー時の背景色
+          position: "fixed",
+          bottom: "150px",
+          right: "150px",
+        }}
+        color="primary"
+        onClick={handleOpenModal}
+      >
+        ツイートでシェアする
+      </Button>
+
+      {/* モーダルウィンドウ */}
+      <Modal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        tweetTemplate={tweetTemplate}
+        handleShare={handleShare}
+      />
       {/* Button at the bottom right corner */}
       <Button
         variant="contained"

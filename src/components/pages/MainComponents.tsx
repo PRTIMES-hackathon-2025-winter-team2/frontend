@@ -42,6 +42,19 @@ export const MainComponent = () => {
           >
             Dream Tree 閲覧画面へ
           </Button>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "pink",
+              "&:hover": { backgroundColor: "hotpink" },
+              width: "250px", // ボタンの幅を固定
+              maxWidth: "100%", // レスポンシブ対応
+            }}
+            component={Link}
+            to={`/login`}
+          >
+            ログアウト
+          </Button>
         </Stack>
       </Container>
     </Box>
