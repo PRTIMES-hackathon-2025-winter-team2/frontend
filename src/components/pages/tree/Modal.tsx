@@ -25,7 +25,7 @@ export const Modal: React.FC<ModalProps> = ({ open, onClose, tweetTemplate, hand
       <DialogContent>
         <Typography variant="body1">あなたの夢をSNSで共有しましょう！</Typography>
         <Box mt={2}>
-          <Typography variant="subtitle1">[テンプレートプレビュー]</Typography>
+          {/* <Typography variant="subtitle1">[テンプレートプレビュー]</Typography> */}
           <TextField
             multiline
             rows={4}
