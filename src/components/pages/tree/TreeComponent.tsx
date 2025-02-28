@@ -44,17 +44,18 @@ export const TreeComponent = () => {
     return () => window.removeEventListener("resize", updateOffset);
   }, []);
 
-  const handleImageClick = (dreamId: string) => {
+  const handleImageClick = (dreamId: string, dreamTitle: string) => {
     updateDreams(userId || "", treeId || "", dreamId);
     // window.location.reload();
-    handleOpenModal();
+    handleOpenModal(dreamTitle);
   };
 
   // モーダルを開く
-  const handleOpenModal = () => {
+  const handleOpenModal = (dreamTitle: string) => {
+    const displayTitle = dreamTitle !== "" ? dreamTitle : "夢の木";
     if (userId) {
       setTweetTemplate(
-        `🎉 【お知らせ】 🎉\nあなたの夢をSNSで共有しましょう！\n\n夢の木: ${url}`
+        `🎉 【お知らせ】 🎉\nあなたの夢をSNSで共有しましょう！\n\n${displayTitle}: ${url}`
       );
     }
     setModalOpen(true);
@@ -117,7 +118,7 @@ export const TreeComponent = () => {
             zIndex: 10,
             transform: "translate(-50%, -50%)",
           }}
-          onClick={() => handleImageClick(dream.id)}
+          onClick={() => handleImageClick(dream.id, dream.title)}
         >
           <motion.img
             src={dream.ended_at != null ? sakura : tubomi}
@@ -236,7 +237,7 @@ export const TreeComponent = () => {
           right: "150px",
         }}
         color="primary"
-        onClick={handleOpenModal}
+        onClick={() => handleOpenModal("")}
       >
         ツイートでシェアする
       </Button>
