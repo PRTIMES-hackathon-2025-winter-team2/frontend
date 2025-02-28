@@ -26,6 +26,7 @@ export const TreeComponent = () => {
   const url2 = `http://localhost:3000/trees/${userId}/${treeId}`;
   // const url = `${API_PATH}/{夢の内容}/${userId}/${treeId}`;
   const [url, setUrl] = useState("");
+  const [displayTitle, setDisplayTitle] = useState("");
 
   const [sakuraVisible, setSakuraVisible] = useState<boolean[]>(
     data.dreams.map((dream) => !!dream.ended_at) // null でなければ true（sakura）
@@ -48,6 +49,16 @@ export const TreeComponent = () => {
     return () => window.removeEventListener("resize", updateOffset);
   }, []);
 
+  useEffect(() => {
+    if (url && displayTitle) {
+      setTimeout(() => {
+        setTweetTemplate(
+          `🎉 【お知らせ】 🎉\n「${displayTitle}」 を達成しました！\n\n URL : ${url}`
+        );
+      }, 100);
+    }
+  }, [url, displayTitle]);
+
   const handleImageClick = (dreamId: string, dreamTitle: string) => {
     updateDreams(userId || "", treeId || "", dreamId);
     // window.location.reload();
@@ -56,14 +67,10 @@ export const TreeComponent = () => {
 
   // モーダルを開く
   const handleOpenModal = (dreamTitle: string, treeTitle: string) => {
-    const displayTitle = dreamTitle !== "" ? dreamTitle : treeTitle;
+    const title = dreamTitle !== "" ? dreamTitle : treeTitle;
+    setDisplayTitle(title);
     if (userId) {
-      setUrl(
-        `${API_PATH}/${encodeURI(displayTitle)}/${userId}/${treeId}`
-      );
-      setTweetTemplate(
-        `🎉 【お知らせ】 🎉\n「${displayTitle}」 を達成しました！\n\n URL : ${url}`
-      );
+      setUrl(`${API_PATH}/${encodeURI(title)}/${userId}/${treeId}`);
     }
     setModalOpen(true);
   };
